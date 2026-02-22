@@ -62,7 +62,7 @@
     /* Glass */
     --glass-bg: 0 0% 100% / 0.03;
     --glass-bg-hover: 0 0% 100% / 0.06;
-    --glass-border: 0 0% 100% / 0.06;
+    --glass-border: 0 0% 100% / 0.10;
     --glass-divider: 0 0% 100% / 0.04;
 
     /* Sidebar (keeping for compat) */
