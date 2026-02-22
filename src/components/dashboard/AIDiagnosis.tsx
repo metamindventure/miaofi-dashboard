@@ -189,8 +189,13 @@ const AIDiagnosis = () => {
         </div>
         {/* Risk ring */}
         <div
-          className="relative w-12 h-12 glass-card rounded-full flex items-center justify-center"
-          style={{ padding: 0 }}
+          className="relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:translate-y-[-2px]"
+          style={{
+            background: "hsl(0 0% 100% / 0.06)",
+            backdropFilter: "blur(30px)",
+            boxShadow:
+              "inset 0 1px 0 0 hsl(0 0% 100% / 0.10), 0 4px 12px -2px hsl(0 0% 0% / 0.4), 0 2px 4px -1px hsl(0 0% 0% / 0.3)",
+          }}
         >
           <svg viewBox="0 0 40 40" className="w-9 h-9 -rotate-90">
             <circle
