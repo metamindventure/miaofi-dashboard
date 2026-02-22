@@ -1,63 +1,69 @@
 
 
-## 3 Dynamic Background Design Proposals
+## 3 个首屏动态背景方案：AI / 科幻 / 赛博朋克风格
 
-The current background is a flat dark color (`hsl(240, 33%, 4%)`). Here are 3 proposals ranked by visual impact, all following the "Dark Luxe" aesthetic and trends from leading crypto/fintech products (Linear, Stripe, Phantom, Rainbow Wallet).
-
----
-
-### Option A: Animated Mesh Gradient (Recommended)
-
-Inspired by: **Stripe, Phantom Wallet, Vercel**
-
-A slow-moving, blurred mesh gradient using 2-3 large radial gradients that drift subtly via CSS keyframe animation. Colors pulled from the brand palette (deep purple, teal, dark blue).
-
-- 2-3 large `div` elements with radial gradients, positioned absolutely behind content
-- Each blob animates on a slow loop (20-30s) with `translate` and slight `scale` changes
-- Heavy `blur(100px+)` and low opacity (0.08-0.12) to keep it subtle
-- Pure CSS, no JS, no performance cost
-
-Visual effect: Soft, living aurora of brand colors gently shifting behind the dashboard.
+当前首屏背景几乎是纯黑色，缺乏视觉层次。以下 3 个方案将大幅提升视觉冲击力，每个方案都可以独立实现并预览。
 
 ---
 
-### Option B: Dot Grid with Radial Fade
+### 方案 A：赛博朋克网格地平线（Cyber Grid Horizon）
 
-Inspired by: **Linear, Raycast, Cal.com**
+**灵感来源**：Tron Legacy、赛博朋克 2077、Blade Runner
 
-A subtle dot grid pattern that fades out radially from center, giving depth without movement. Combined with a soft radial gradient overlay in brand purple.
+在页面底部绘制一个带透视效果的网格地平线，网格线发出紫色/青色光芒，向远处消失。上方配合大面积的渐变光晕。
 
-- CSS `radial-gradient` for the dot pattern (1px dots, ~24px spacing)
-- A large radial gradient overlay fading from subtle purple at center to transparent
-- Optional: very slow `background-position` animation for gentle drift
-- Extremely lightweight, purely CSS
+**技术实现**：
+- 使用 CSS `perspective` + `rotateX` 创建 3D 透视网格平面
+- 网格线用 `repeating-linear-gradient` 绘制，颜色为品牌紫 + 青色
+- 顶部加一条发光的"地平线"光带（水平渐变线）
+- 上方区域用径向渐变做深紫到黑的过渡
+- 可选：网格线用 `background-position` 动画缓慢向前滚动
 
-Visual effect: Technical, precise feel with depth -- fits the "Bloomberg designed by Apple" vision.
-
----
-
-### Option C: Noise Texture + Gradient Sweep
-
-Inspired by: **Arc Browser, Figma, Midjourney**
-
-A fine noise/grain texture overlay combined with a diagonal gradient sweep that shifts slowly between brand colors.
-
-- SVG noise filter applied as a pseudo-element with low opacity (0.03-0.05)
-- Background uses a large `linear-gradient` that animates its angle or position over 30-60s
-- Colors: deep navy to dark purple to near-black
-- Adds organic texture that breaks the "flat screen" feel
-
-Visual effect: Cinematic, premium feel with subtle grain -- like a high-end product launch page.
+**视觉效果**：经典赛博朋克透视网格，强烈的科幻感和空间纵深感。
 
 ---
 
-### Implementation Notes
+### 方案 B：粒子星云 + 光线扫描（Nebula Glow + Scan Line）
 
-- All 3 options are pure CSS (Option C uses an inline SVG filter for noise)
-- Changes limited to `src/index.css` and possibly `src/pages/Index.tsx` for the gradient blobs (Option A)
-- No new dependencies needed
-- All respect the existing glass-card and glassmorphism design language
-- Performance impact is negligible
+**灵感来源**：AI 产品（ChatGPT、Midjourney）、太空主题
 
-Pick one (or a combination) and I will implement it.
+多个大尺寸、高模糊的渐变光斑（紫色、青色、蓝色），加上一条缓慢从上到下扫描的半透明光线，模拟 AI 正在"扫描/分析"的感觉。
+
+**技术实现**：
+- 3-4 个大型 `div`，使用 `radial-gradient` + `blur(150px+)`，不透明度 0.15-0.25
+- 光斑使用现有的 `mesh-blob` 关键帧动画缓慢漂移（20-30秒循环）
+- 额外增加一条水平光线，用 `linear-gradient` 绘制，高度约 1-2px，带辉光
+- 光线用 `translateY` 动画从顶部缓慢扫到底部（8-10秒循环）
+- 整体色调：深紫、青色、深蓝
+
+**视觉效果**：有生命感的星云背景 + AI 扫描光线，科技感十足。
+
+---
+
+### 方案 C：矩阵数据流光效（Matrix Data Stream）
+
+**灵感来源**：黑客帝国、Bloomberg Terminal、量化交易界面
+
+从顶部向下流动的竖向光线条纹，像数据流一样，配合底部的渐变雾气。光线条纹颜色使用品牌绿色（profit 色）和紫色交替。
+
+**技术实现**：
+- 使用 `repeating-linear-gradient` 创建竖向条纹（宽 1px，间距 40-80px 随机化）
+- 条纹通过 `mask-image` 做顶部到底部的渐隐
+- 使用 `background-position` 动画让条纹缓慢向下流动
+- 底部加一层水平渐变雾（从紫色到透明），模拟地面反光
+- 整体不透明度控制在 0.08-0.15，保持不干扰内容
+
+**视觉效果**：数据在流动的感觉，呼应"AI 投资顾问"的产品定位，科幻且专业。
+
+---
+
+### 实现说明
+
+- 所有方案均为纯 CSS 实现，无需新增依赖
+- 修改文件：`src/pages/Index.tsx`（背景元素）和 `src/index.css`（动画关键帧）
+- 所有动画使用 `will-change` 和 GPU 加速，性能开销极低
+- 与现有 glass-card 玻璃拟态风格完全兼容
+- 这次会确保效果明显可见（不透明度和尺寸都会充分放大）
+
+请选择一个方案，我会立即实现让您预览。也可以选择"全部实现"，我会逐一实现供您对比。
 
