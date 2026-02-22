@@ -247,129 +247,58 @@
   .animate-pulse-logo { animation: pulse-logo 2s ease-in-out infinite; }
   .animate-spin-slow { animation: spin-slow 1s linear infinite; }
 
-  /* === Nebula blob drift (shared by A & B) === */
-  @keyframes nebula-blob-1 {
-    0%, 100% { transform: translate(0%, 0%) scale(1); }
-    25% { transform: translate(12%, -18%) scale(1.15); }
-    50% { transform: translate(-8%, 12%) scale(0.9); }
-    75% { transform: translate(-12%, -8%) scale(1.08); }
-  }
-  @keyframes nebula-blob-2 {
-    0%, 100% { transform: translate(0%, 0%) scale(1); }
-    25% { transform: translate(-15%, 12%) scale(1.1); }
-    50% { transform: translate(10%, -10%) scale(1.15); }
-    75% { transform: translate(8%, 15%) scale(0.85); }
-  }
-  @keyframes nebula-blob-3 {
-    0%, 100% { transform: translate(0%, 0%) scale(1.05); }
-    25% { transform: translate(10%, 10%) scale(0.9); }
-    50% { transform: translate(-12%, -8%) scale(1.15); }
-    75% { transform: translate(-6%, 12%) scale(1); }
-  }
-  .animate-nebula-blob-1 { animation: nebula-blob-1 25s ease-in-out infinite; }
-  .animate-nebula-blob-2 { animation: nebula-blob-2 30s ease-in-out infinite; }
-  .animate-nebula-blob-3 { animation: nebula-blob-3 22s ease-in-out infinite; }
-
-  /* === A: Neural Pulse — pulse rings === */
-  @keyframes pulse-ring {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(3.5); opacity: 0; }
-  }
-  .animate-pulse-ring-1 { animation: pulse-ring 4s ease-out infinite; }
-  .animate-pulse-ring-2 { animation: pulse-ring 4s ease-out 1.3s infinite; }
-  .animate-pulse-ring-3 { animation: pulse-ring 4s ease-out 2.6s infinite; }
-
-  /* === A: Particle drift === */
-  @keyframes particle-drift-1 {
-    0%, 100% { transform: translate(0, 0); opacity: 0.6; }
-    25% { transform: translate(30px, -20px); opacity: 1; }
-    50% { transform: translate(-15px, 25px); opacity: 0.4; }
-    75% { transform: translate(20px, 10px); opacity: 0.8; }
-  }
-  @keyframes particle-drift-2 {
-    0%, 100% { transform: translate(0, 0); opacity: 0.5; }
-    25% { transform: translate(-25px, 15px); opacity: 0.9; }
-    50% { transform: translate(20px, -30px); opacity: 0.3; }
-    75% { transform: translate(-10px, -15px); opacity: 0.7; }
-  }
-  @keyframes particle-drift-3 {
-    0%, 100% { transform: translate(0, 0); opacity: 0.7; }
-    33% { transform: translate(18px, 22px); opacity: 0.4; }
-    66% { transform: translate(-22px, -12px); opacity: 1; }
-  }
-  @keyframes particle-drift-4 {
-    0%, 100% { transform: translate(0, 0); opacity: 0.4; }
-    30% { transform: translate(-20px, -25px); opacity: 0.8; }
-    60% { transform: translate(25px, 15px); opacity: 0.5; }
-  }
-  .animate-particle-drift-1 { animation: particle-drift-1 15s ease-in-out infinite; }
-  .animate-particle-drift-2 { animation: particle-drift-2 18s ease-in-out infinite; }
-  .animate-particle-drift-3 { animation: particle-drift-3 12s ease-in-out infinite; }
-  .animate-particle-drift-4 { animation: particle-drift-4 20s ease-in-out infinite; }
-
-  /* === A: Diagonal scan === */
-  @keyframes diagonal-scan {
-    0% { background-position: 200% 200%; }
-    100% { background-position: -200% -200%; }
-  }
-  .animate-diagonal-scan { animation: diagonal-scan 6s linear infinite; }
-
-  /* === B: Stream converge (pulsing opacity) === */
-  @keyframes stream-converge-1 {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.8; }
-  }
-  @keyframes stream-converge-2 {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 0.7; }
-  }
-  .animate-stream-converge-1 { animation: stream-converge-1 8s ease-in-out infinite; }
-  .animate-stream-converge-2 { animation: stream-converge-2 10s ease-in-out 2s infinite; }
-  .animate-stream-converge-3 { animation: stream-converge-1 12s ease-in-out 4s infinite; }
-  .animate-stream-converge-4 { animation: stream-converge-2 15s ease-in-out 1s infinite; }
-
-  /* === B: Core rotate === */
+  /* === C: Holographic base rotate === */
   @keyframes core-rotate {
     to { transform: rotate(360deg); }
   }
-  .animate-core-rotate { animation: core-rotate 12s linear infinite; }
+  .animate-holo-base-rotate { animation: core-rotate 60s linear infinite; }
 
-  /* === B: Rays rotate (slow) === */
-  .animate-rays-rotate { animation: core-rotate 45s linear infinite; }
+  /* === C: Arc spins === */
+  @keyframes arc-spin-cw {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes arc-spin-ccw {
+    to { transform: rotate(-360deg); }
+  }
+  .animate-arc-spin-1 { animation: arc-spin-cw 15s linear infinite; }
+  .animate-arc-spin-2 { animation: arc-spin-ccw 10s linear infinite; }
+  .animate-arc-spin-3 { animation: arc-spin-cw 25s linear infinite; }
 
-  /* === B: Floating fragments === */
-  @keyframes fragment-1 {
-    0%, 100% { transform: translate(0, 0) rotate(45deg); opacity: 0.5; }
-    25% { transform: translate(40px, -30px) rotate(90deg); opacity: 0.8; }
-    50% { transform: translate(-20px, 40px) rotate(135deg); opacity: 0.3; }
-    75% { transform: translate(30px, 20px) rotate(180deg); opacity: 0.6; }
+  /* === C: Radar ping === */
+  @keyframes radar-ping {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(4); opacity: 0; }
   }
-  @keyframes fragment-2 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.4; }
-    33% { transform: translate(-35px, -25px) rotate(120deg); opacity: 0.7; }
-    66% { transform: translate(25px, 35px) rotate(240deg); opacity: 0.3; }
-  }
-  @keyframes fragment-3 {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.6; }
-    25% { transform: translate(20px, 30px) rotate(60deg); opacity: 0.3; }
-    50% { transform: translate(-30px, -20px) rotate(120deg); opacity: 0.8; }
-    75% { transform: translate(15px, -25px) rotate(180deg); opacity: 0.4; }
-  }
-  @keyframes fragment-4 {
-    0%, 100% { transform: translate(0, 0) rotate(45deg); opacity: 0.3; }
-    50% { transform: translate(-25px, 20px) rotate(225deg); opacity: 0.6; }
-  }
-  .animate-fragment-1 { animation: fragment-1 16s ease-in-out infinite; }
-  .animate-fragment-2 { animation: fragment-2 20s ease-in-out infinite; }
-  .animate-fragment-3 { animation: fragment-3 14s ease-in-out infinite; }
-  .animate-fragment-4 { animation: fragment-4 22s ease-in-out infinite; }
+  .animate-radar-ping-1 { animation: radar-ping 3s ease-out infinite; }
+  .animate-radar-ping-2 { animation: radar-ping 3s ease-out 1s infinite; }
+  .animate-radar-ping-3 { animation: radar-ping 3s ease-out 2s infinite; }
 
-  /* === B: Hue shift === */
-  @keyframes hue-shift {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
+  /* === C: Node float === */
+  @keyframes node-float-1 {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(15px, -10px); }
+    50% { transform: translate(-10px, 15px); }
+    75% { transform: translate(8px, 5px); }
   }
-  .animate-hue-shift { animation: hue-shift 30s linear infinite; }
+  @keyframes node-float-2 {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(-12px, 8px); }
+    66% { transform: translate(10px, -12px); }
+  }
+  @keyframes node-float-3 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(8px, 10px); }
+  }
+  .animate-node-float-1 { animation: node-float-1 18s ease-in-out infinite; }
+  .animate-node-float-2 { animation: node-float-2 22s ease-in-out infinite; }
+  .animate-node-float-3 { animation: node-float-3 15s ease-in-out infinite; }
+
+  /* === C: HUD blink === */
+  @keyframes hud-blink {
+    0%, 70%, 100% { opacity: 1; }
+    75%, 95% { opacity: 0.2; }
+  }
+  .animate-hud-blink { animation: hud-blink 3s ease-in-out infinite; }
 
   /* === C: Holographic base rotate === */
   .animate-holo-base-rotate { animation: core-rotate 60s linear infinite; }
