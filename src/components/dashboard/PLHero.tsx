@@ -42,6 +42,12 @@ const PLHero = ({ animate }: PLHeroProps) => {
 
   const [activePeriod, setActivePeriod] = useState("30D");
 
+  const periodLabels: Record<string, string> = {
+    "1D": "Past 1 Day",
+    "7D": "Past 7 Days",
+    "30D": "Past 30 Days",
+  };
+
   return (
     <section className="w-full py-12 relative">
       {/* Glow */}
@@ -54,7 +60,7 @@ const PLHero = ({ animate }: PLHeroProps) => {
       />
 
       <div className="relative z-10 flex flex-col items-center gap-4">
-        <span className="label-uppercase">Estimated P&L · Past 30 Days</span>
+        <span className="label-uppercase">Estimated P&L · {periodLabels[activePeriod]}</span>
 
         <div className="flex items-center gap-2">
           <h1
