@@ -122,7 +122,7 @@ const InsightCard = ({
                   </button>
                   {showPopover && (
                     <div
-                      className="absolute top-full left-0 mt-2 glass-card p-4 w-[280px] z-50"
+                      className="absolute top-full left-0 mt-2 p-4 w-[280px] z-50 bg-[#1a1a2e] border border-white/10 rounded-2xl shadow-xl"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="flex items-center gap-2 mb-2">
