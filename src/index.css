@@ -103,9 +103,9 @@
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.08),
       inset 0 0 20px 0 hsl(0 0% 100% / 0.02),
-      0 4px 24px -4px hsl(0 0% 0% / 0.3),
+      0 4px 24px -4px hsl(0 0% 0% / 0.4),
       0 0 40px -10px hsl(252 75% 63% / 0.08);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   }
 
   .glass-card:hover {
@@ -115,8 +115,67 @@
     box-shadow:
       inset 0 1px 0 0 hsl(0 0% 100% / 0.10),
       inset 0 0 20px 0 hsl(0 0% 100% / 0.03),
-      0 8px 32px -4px hsl(0 0% 0% / 0.4),
+      0 8px 32px -4px hsl(0 0% 0% / 0.5),
       0 0 60px -10px hsl(252 75% 63% / 0.12);
+  }
+
+  /* Secondary / outline button with depth */
+  .glass-button {
+    background: hsl(0 0% 100% / 0.04);
+    border: 1px solid hsl(0 0% 100% / 0.10);
+    border-top-color: hsl(0 0% 100% / 0.14);
+    border-bottom-color: hsl(0 0% 100% / 0.06);
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.06),
+      0 2px 6px -1px hsl(0 0% 0% / 0.3),
+      0 1px 2px 0 hsl(0 0% 0% / 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .glass-button:hover {
+    background: hsl(0 0% 100% / 0.08);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.08),
+      0 4px 12px -2px hsl(0 0% 0% / 0.4),
+      0 1px 3px 0 hsl(0 0% 0% / 0.25);
+  }
+
+  .glass-button:active {
+    transform: translateY(0.5px);
+    box-shadow:
+      inset 0 2px 4px 0 hsl(0 0% 0% / 0.2),
+      0 1px 2px 0 hsl(0 0% 0% / 0.15);
+  }
+
+  /* Primary CTA button with depth */
+  .glass-button-primary {
+    background: linear-gradient(135deg, hsl(var(--brand-from)), hsl(var(--brand-to)));
+    border: 1px solid hsl(252 75% 70% / 0.3);
+    border-top-color: hsl(252 75% 80% / 0.4);
+    border-bottom-color: hsl(252 75% 40% / 0.3);
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.15),
+      0 2px 8px -1px hsl(252 75% 63% / 0.3),
+      0 4px 16px -4px hsl(0 0% 0% / 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+
+  .glass-button-primary:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.2),
+      0 4px 16px -2px hsl(252 75% 63% / 0.4),
+      0 8px 24px -4px hsl(0 0% 0% / 0.35);
+  }
+
+  .glass-button-primary:active {
+    transform: translateY(0.5px);
+    filter: brightness(0.95);
+    box-shadow:
+      inset 0 2px 4px 0 hsl(0 0% 0% / 0.15),
+      0 1px 4px 0 hsl(252 75% 63% / 0.2);
   }
 
   .glass-chip {
