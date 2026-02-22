@@ -24,36 +24,23 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Animated Mesh Gradient Background */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+      {/* Dot Grid + Radial Fade Background */}
+      <div className="pointer-events-none fixed inset-0 z-0">
+        {/* Dot grid pattern */}
         <div
-          className="absolute w-[600px] h-[600px] rounded-full opacity-[0.10]"
+          className="absolute inset-0"
           style={{
-            background: 'radial-gradient(circle, hsl(252 75% 63%) 0%, transparent 70%)',
-            top: '-10%',
-            left: '-5%',
-            filter: 'blur(120px)',
-            animation: 'mesh-blob-1 25s ease-in-out infinite',
+            backgroundImage: 'radial-gradient(circle, hsl(252 60% 63% / 0.25) 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+            maskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 70%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 70%)',
           }}
         />
+        {/* Purple radial glow */}
         <div
-          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]"
+          className="absolute inset-0"
           style={{
-            background: 'radial-gradient(circle, hsl(174 60% 55%) 0%, transparent 70%)',
-            top: '30%',
-            right: '-8%',
-            filter: 'blur(140px)',
-            animation: 'mesh-blob-2 30s ease-in-out infinite',
-          }}
-        />
-        <div
-          className="absolute w-[550px] h-[550px] rounded-full opacity-[0.07]"
-          style={{
-            background: 'radial-gradient(circle, hsl(227 67% 50%) 0%, transparent 70%)',
-            bottom: '-15%',
-            left: '30%',
-            filter: 'blur(130px)',
-            animation: 'mesh-blob-3 28s ease-in-out infinite',
+            background: 'radial-gradient(ellipse 50% 40% at 50% 30%, hsl(252 75% 63% / 0.08) 0%, transparent 70%)',
           }}
         />
       </div>
