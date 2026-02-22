@@ -188,8 +188,11 @@ const AIDiagnosis = () => {
           <span className="text-xs text-muted-foreground italic">Powered by Claude</span>
         </div>
         {/* Risk ring */}
-        <div className="relative w-10 h-10">
-          <svg viewBox="0 0 40 40" className="w-10 h-10 -rotate-90">
+        <div
+          className="relative w-12 h-12 glass-card rounded-full flex items-center justify-center"
+          style={{ padding: 0 }}
+        >
+          <svg viewBox="0 0 40 40" className="w-9 h-9 -rotate-90">
             <circle
               cx="20"
               cy="20"
