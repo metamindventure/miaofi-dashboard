@@ -1,11 +1,63 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import NavBar from "@/components/dashboard/NavBar";
+import LoadingState from "@/components/dashboard/LoadingState";
+import PLHero from "@/components/dashboard/PLHero";
+import AIDiagnosis from "@/components/dashboard/AIDiagnosis";
+import ShareStrip from "@/components/dashboard/ShareStrip";
+import PortfolioBento from "@/components/dashboard/PortfolioBento";
+import WalletSummary from "@/components/dashboard/WalletSummary";
+import Holdings from "@/components/dashboard/Holdings";
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 
 const Index = () => {
+  const [loaded, setLoaded] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoaded(true);
+      // Small delay for crossfade
+      setTimeout(() => setShowDashboard(true), 50);
+    }, 6000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background">
+      <NavBar />
+
+      {/* Loading → Dashboard crossfade */}
+      <div className="relative">
+        {/* Loading state */}
+        <div
+          className="transition-opacity duration-500"
+          style={{
+            opacity: loaded ? 0 : 1,
+            pointerEvents: loaded ? "none" : "auto",
+            position: loaded ? "absolute" : "relative",
+            inset: 0,
+          }}
+        >
+          <LoadingState />
+        </div>
+
+        {/* Dashboard */}
+        {loaded && (
+          <div
+            className="transition-opacity duration-500"
+            style={{ opacity: showDashboard ? 1 : 0 }}
+          >
+            <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8">
+              <PLHero animate={showDashboard} />
+              <AIDiagnosis />
+              <ShareStrip />
+              <PortfolioBento />
+              <WalletSummary />
+              <Holdings />
+              <DashboardFooter />
+            </main>
+          </div>
+        )}
       </div>
     </div>
   );
