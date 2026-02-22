@@ -15,9 +15,9 @@ import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
 type BgTheme = "cyber" | "nebula" | "matrix";
 
 const bgLabels: Record<BgTheme, string> = {
-  cyber: "A · 赛博网格",
-  nebula: "B · 星云扫描",
-  matrix: "C · 数据流",
+  cyber: "A · 神经脉冲",
+  nebula: "B · 量子涌流",
+  matrix: "C · 全息界面",
 };
 
 const Index = () => {
