@@ -25,9 +25,12 @@ const NavBar = () => {
     <nav
       className="sticky top-0 z-50 h-14 flex items-center justify-between px-6 md:px-8"
       style={{
-        background: "rgba(10, 10, 15, 0.8)",
-        backdropFilter: "blur(12px)",
-        borderBottom: "1px solid hsl(0 0% 100% / 0.06)",
+        background: "hsl(0 0% 100% / 0.05)",
+        backdropFilter: "blur(30px)",
+        WebkitBackdropFilter: "blur(30px)",
+        borderBottom: "1px solid hsl(0 0% 100% / 0.12)",
+        boxShadow:
+          "inset 0 -1px 0 0 hsl(0 0% 100% / 0.06), 0 4px 24px -4px hsl(0 0% 0% / 0.3), 0 0 40px -10px hsl(252 75% 63% / 0.06)",
       }}
     >
       {/* Left */}
