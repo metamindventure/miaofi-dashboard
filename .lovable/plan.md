@@ -1,28 +1,13 @@
 
 
-## Fix: Popover transparency issue
+## Improve muted text readability with Soft Lavender
 
-The "Pro Feature" popover uses the `glass-card` class which applies `rgba(255, 255, 255, 0.03)` as background — nearly transparent. The card below bleeds through.
+Update the `--muted-foreground` CSS variable in `src/index.css` from `245 15% 50%` to `245 15% 65%`, shifting the color from `#6b6b80` to approximately `#9494AB`. This increases contrast against the dark background while keeping a cool lavender tone that complements the brand purple accent.
 
-### Solution
+### Changes
 
-In `src/components/dashboard/AIDiagnosis.tsx`, replace the `glass-card` class on the popover div (line ~125) with explicit opaque styling:
+**File: `src/index.css`** (line 24)
+- Change `--muted-foreground: 245 15% 50%;` to `--muted-foreground: 245 15% 65%;`
 
-- Remove `glass-card` from the popover
-- Add solid dark background: `bg-[#1a1a2e]` (or similar dark color matching the theme)
-- Keep `backdrop-blur`, border, rounded corners, shadow, and `z-50`
-- Add `border border-[rgba(255,255,255,0.1)]` for the card edge
-
-This ensures the popover fully covers content beneath it while still looking consistent with the dark luxe theme.
-
-### Technical Detail
-
-Change in `AIDiagnosis.tsx` line ~125:
-```
-// FROM:
-className="absolute top-full left-0 mt-2 glass-card p-4 w-[280px] z-50"
-
-// TO:
-className="absolute top-full left-0 mt-2 p-4 w-[280px] z-50 bg-[#1a1a2e] border border-white/10 rounded-2xl shadow-xl"
-```
+That single variable controls all muted/secondary text across the app (labels, timestamps, disclaimers, chip text, footer links, etc.), so every instance will update automatically.
 
