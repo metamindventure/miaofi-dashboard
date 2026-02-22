@@ -171,6 +171,27 @@
     to { transform: rotate(360deg); }
   }
 
+  @keyframes mesh-blob-1 {
+    0%, 100% { transform: translate(0%, 0%) scale(1); }
+    25% { transform: translate(10%, -15%) scale(1.1); }
+    50% { transform: translate(-5%, 10%) scale(0.95); }
+    75% { transform: translate(-10%, -5%) scale(1.05); }
+  }
+
+  @keyframes mesh-blob-2 {
+    0%, 100% { transform: translate(0%, 0%) scale(1); }
+    25% { transform: translate(-12%, 10%) scale(1.05); }
+    50% { transform: translate(8%, -8%) scale(1.1); }
+    75% { transform: translate(5%, 12%) scale(0.9); }
+  }
+
+  @keyframes mesh-blob-3 {
+    0%, 100% { transform: translate(0%, 0%) scale(1.05); }
+    25% { transform: translate(8%, 8%) scale(0.95); }
+    50% { transform: translate(-10%, -5%) scale(1.1); }
+    75% { transform: translate(-5%, 10%) scale(1); }
+  }
+
   .animate-pulse-logo {
     animation: pulse-logo 2s ease-in-out infinite;
   }
