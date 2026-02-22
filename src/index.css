@@ -60,9 +60,9 @@
     --chain-blast: 60 97% 50%;
 
     /* Glass */
-    --glass-bg: 0 0% 100% / 0.03;
-    --glass-bg-hover: 0 0% 100% / 0.06;
-    --glass-border: 0 0% 100% / 0.10;
+    --glass-bg: 0 0% 100% / 0.06;
+    --glass-bg-hover: 0 0% 100% / 0.09;
+    --glass-border: 0 0% 100% / 0.12;
     --glass-divider: 0 0% 100% / 0.04;
 
     /* Sidebar (keeping for compat) */
@@ -94,14 +94,29 @@
 @layer components {
   .glass-card {
     background: hsl(var(--glass-bg));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
     border: 1px solid hsl(var(--glass-border));
+    border-top-color: hsl(0 0% 100% / 0.18);
+    border-left-color: hsl(0 0% 100% / 0.15);
     border-radius: var(--radius);
-    transition: all 0.2s ease;
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.08),
+      inset 0 0 20px 0 hsl(0 0% 100% / 0.02),
+      0 4px 24px -4px hsl(0 0% 0% / 0.3),
+      0 0 40px -10px hsl(252 75% 63% / 0.08);
+    transition: all 0.3s ease;
   }
 
   .glass-card:hover {
     background: hsl(var(--glass-bg-hover));
+    border-top-color: hsl(0 0% 100% / 0.22);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.10),
+      inset 0 0 20px 0 hsl(0 0% 100% / 0.03),
+      0 8px 32px -4px hsl(0 0% 0% / 0.4),
+      0 0 60px -10px hsl(252 75% 63% / 0.12);
   }
 
   .glass-chip {
