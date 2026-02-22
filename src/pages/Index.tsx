@@ -50,7 +50,7 @@ const Index = () => {
             className="transition-opacity duration-500"
             style={{ opacity: showDashboard ? 1 : 0 }}
           >
-            <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8">
+            <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8 pt-14">
               <PLHero animate={showDashboard} />
               <AIDiagnosis />
               <ShareStrip />
