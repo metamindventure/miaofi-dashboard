@@ -23,7 +23,42 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Animated Mesh Gradient Background */}
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div
+          className="absolute w-[600px] h-[600px] rounded-full opacity-[0.10]"
+          style={{
+            background: 'radial-gradient(circle, hsl(252 75% 63%) 0%, transparent 70%)',
+            top: '-10%',
+            left: '-5%',
+            filter: 'blur(120px)',
+            animation: 'mesh-blob-1 25s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="absolute w-[500px] h-[500px] rounded-full opacity-[0.08]"
+          style={{
+            background: 'radial-gradient(circle, hsl(174 60% 55%) 0%, transparent 70%)',
+            top: '30%',
+            right: '-8%',
+            filter: 'blur(140px)',
+            animation: 'mesh-blob-2 30s ease-in-out infinite',
+          }}
+        />
+        <div
+          className="absolute w-[550px] h-[550px] rounded-full opacity-[0.07]"
+          style={{
+            background: 'radial-gradient(circle, hsl(227 67% 50%) 0%, transparent 70%)',
+            bottom: '-15%',
+            left: '30%',
+            filter: 'blur(130px)',
+            animation: 'mesh-blob-3 28s ease-in-out infinite',
+          }}
+        />
+      </div>
+
+      <div className="relative z-10">
       <NavBar />
 
       {/* Loading → Dashboard crossfade */}
@@ -58,6 +93,7 @@ const Index = () => {
             </main>
           </div>
         )}
+      </div>
       </div>
     </div>
   );
