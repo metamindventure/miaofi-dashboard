@@ -8,15 +8,26 @@ import PortfolioBento from "@/components/dashboard/PortfolioBento";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
+import CyberGridBg from "@/components/dashboard/backgrounds/CyberGridBg";
+import NebulaGlowBg from "@/components/dashboard/backgrounds/NebulaGlowBg";
+import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
+
+type BgTheme = "cyber" | "nebula" | "matrix";
+
+const bgLabels: Record<BgTheme, string> = {
+  cyber: "A · 赛博网格",
+  nebula: "B · 星云扫描",
+  matrix: "C · 数据流",
+};
 
 const Index = () => {
   const [loaded, setLoaded] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [bgTheme, setBgTheme] = useState<BgTheme>("cyber");
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoaded(true);
-      // Small delay for crossfade
       setTimeout(() => setShowDashboard(true), 50);
     }, 6000);
     return () => clearTimeout(timer);
@@ -24,25 +35,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Dot Grid + Radial Fade Background */}
-      <div className="pointer-events-none fixed inset-0 z-0">
-        {/* Dot grid pattern */}
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(circle, hsl(252 60% 63% / 0.25) 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-            maskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 70%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 70%)',
-          }}
-        />
-        {/* Purple radial glow */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse 50% 40% at 50% 30%, hsl(252 75% 63% / 0.08) 0%, transparent 70%)',
-          }}
-        />
+      {/* Dynamic backgrounds */}
+      {bgTheme === "cyber" && <CyberGridBg />}
+      {bgTheme === "nebula" && <NebulaGlowBg />}
+      {bgTheme === "matrix" && <MatrixStreamBg />}
+
+      {/* Background switcher (preview only) */}
+      <div className="fixed bottom-6 right-6 z-50 flex gap-2">
+        {(Object.keys(bgLabels) as BgTheme[]).map((key) => (
+          <button
+            key={key}
+            onClick={() => setBgTheme(key)}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              bgTheme === key
+                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
+                : "glass-chip hover:bg-[hsl(var(--glass-bg-hover))]"
+            }`}
+          >
+            {bgLabels[key]}
+          </button>
+        ))}
       </div>
 
       <div className="relative z-10">
