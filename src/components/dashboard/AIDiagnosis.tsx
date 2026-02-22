@@ -217,10 +217,11 @@ const AIDiagnosis = () => {
 
       {/* Summary banner */}
       <div
-        className="rounded-lg p-4"
+        className="glass-card rounded-lg p-4"
         style={{
-          background: "hsla(350, 100%, 65%, 0.06)",
           borderLeft: "3px solid hsl(var(--loss))",
+          boxShadow:
+            "inset 0 0 20px 0 hsla(350, 100%, 65%, 0.06), inset 0 1px 0 0 hsl(0 0% 100% / 0.08), 0 4px 24px -4px hsl(0 0% 0% / 0.3), 0 0 40px -10px hsl(252 75% 63% / 0.08)",
         }}
       >
         <p className="text-sm">
