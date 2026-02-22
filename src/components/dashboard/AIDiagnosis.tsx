@@ -66,7 +66,7 @@ const InsightCard = ({
 
   return (
     <div
-      className="glass-card p-5 relative transition-all duration-200"
+      className="glass-card p-5 relative transition-all duration-200 overflow-visible"
       style={{
         borderLeft: `3px solid ${config.border}`,
         opacity: reviewed ? 0.5 : 1,
@@ -121,7 +121,7 @@ const InsightCard = ({
                   </button>
                   {showPopover && (
                     <div
-                      className="absolute top-full left-0 mt-2 glass-card p-4 w-[280px] z-20"
+                      className="absolute top-full left-0 mt-2 glass-card p-4 w-[280px] z-50"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="flex items-center gap-2 mb-2">
