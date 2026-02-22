@@ -8,22 +8,11 @@ import PortfolioBento from "@/components/dashboard/PortfolioBento";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
-import CyberGridBg from "@/components/dashboard/backgrounds/CyberGridBg";
-import NebulaGlowBg from "@/components/dashboard/backgrounds/NebulaGlowBg";
 import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
-
-type BgTheme = "cyber" | "nebula" | "matrix";
-
-const bgLabels: Record<BgTheme, string> = {
-  cyber: "A · 神经脉冲",
-  nebula: "B · 量子涌流",
-  matrix: "C · 全息界面",
-};
 
 const Index = () => {
   const [loaded, setLoaded] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [bgTheme, setBgTheme] = useState<BgTheme>("cyber");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -35,27 +24,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
-      {/* Dynamic backgrounds */}
-      {bgTheme === "cyber" && <CyberGridBg />}
-      {bgTheme === "nebula" && <NebulaGlowBg />}
-      {bgTheme === "matrix" && <MatrixStreamBg />}
-
-      {/* Background switcher (preview only) */}
-      <div className="fixed bottom-6 right-6 z-50 flex gap-2">
-        {(Object.keys(bgLabels) as BgTheme[]).map((key) => (
-          <button
-            key={key}
-            onClick={() => setBgTheme(key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-              bgTheme === key
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
-                : "glass-chip hover:bg-[hsl(var(--glass-bg-hover))]"
-            }`}
-          >
-            {bgLabels[key]}
-          </button>
-        ))}
-      </div>
+      <MatrixStreamBg />
 
       <div className="relative z-10">
       <NavBar />
