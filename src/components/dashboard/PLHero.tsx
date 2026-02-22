@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { TrendingUp, Share2, Wallet } from "lucide-react";
+import { TrendingUp, TrendingDown, Share2, Wallet } from "lucide-react";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
 import { toast } from "sonner";
 
 const periodData: Record<string, { pnl: number; pct: string; sparkline: { v: number }[] }> = {
   "1D": {
-    pnl: 187,
-    pct: "+0.5%",
+    pnl: -312,
+    pct: "-0.8%",
     sparkline: [
-      { v: 36200 }, { v: 36150 }, { v: 36320 }, { v: 36280 }, { v: 36450 },
-      { v: 36380 }, { v: 36520 }, { v: 36490 }, { v: 36600 }, { v: 36759 },
+      { v: 37100 }, { v: 37050 }, { v: 36920 }, { v: 36980 }, { v: 36750 },
+      { v: 36680 }, { v: 36820 }, { v: 36590 }, { v: 36500 }, { v: 36759 },
     ],
   },
   "7D": {
@@ -47,6 +47,7 @@ const PLHero = ({ animate }: PLHeroProps) => {
   const [hasAnimated, setHasAnimated] = useState(false);
 
   const { pnl, pct, sparkline } = periodData[activePeriod];
+  const isLoss = pnl < 0;
 
   useEffect(() => {
     if (!animate) return;
@@ -79,10 +80,11 @@ const PLHero = ({ animate }: PLHeroProps) => {
     <section className="w-full py-12 relative">
       {/* Glow */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none transition-all duration-500"
         style={{
-          background:
-            "radial-gradient(ellipse at center, hsla(160, 100%, 45%, 0.08) 0%, transparent 70%)",
+          background: isLoss
+            ? "radial-gradient(ellipse at center, hsla(350, 100%, 65%, 0.08) 0%, transparent 70%)"
+            : "radial-gradient(ellipse at center, hsla(160, 100%, 45%, 0.08) 0%, transparent 70%)",
         }}
       />
 
@@ -91,15 +93,18 @@ const PLHero = ({ animate }: PLHeroProps) => {
 
         <div className="flex items-center gap-2">
           <h1
-            className="font-display font-bold text-5xl md:text-[64px] text-profit glow-profit leading-none"
+            className={`font-display font-bold text-5xl md:text-[64px] leading-none transition-colors duration-300 ${
+              isLoss ? "text-loss" : "text-profit glow-profit"
+            }`}
+            style={isLoss ? { textShadow: "0 0 40px hsl(var(--loss-glow))" } : undefined}
           >
-            +${displayValue.toLocaleString()}
+            {isLoss ? "-" : "+"}${Math.abs(displayValue).toLocaleString()}
           </h1>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-profit text-xl md:text-2xl font-display font-semibold flex items-center gap-1">
-            <TrendingUp className="w-5 h-5" />
+          <span className={`${isLoss ? "text-loss" : "text-profit"} text-xl md:text-2xl font-display font-semibold flex items-center gap-1 transition-colors duration-300`}>
+            {isLoss ? <TrendingDown className="w-5 h-5" /> : <TrendingUp className="w-5 h-5" />}
             ({pct})
           </span>
           <button
@@ -141,14 +146,14 @@ const PLHero = ({ animate }: PLHeroProps) => {
             <AreaChart data={sparkline}>
               <defs>
                 <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(160 100% 45%)" stopOpacity={0.3} />
-                  <stop offset="100%" stopColor="hsl(160 100% 45%)" stopOpacity={0} />
+                  <stop offset="0%" stopColor={isLoss ? "hsl(350 100% 65%)" : "hsl(160 100% 45%)"} stopOpacity={0.3} />
+                  <stop offset="100%" stopColor={isLoss ? "hsl(350 100% 65%)" : "hsl(160 100% 45%)"} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <Area
                 type="monotone"
                 dataKey="v"
-                stroke="hsl(160 100% 45%)"
+                stroke={isLoss ? "hsl(350 100% 65%)" : "hsl(160 100% 45%)"}
                 strokeWidth={1.5}
                 fill="url(#sparkGrad)"
                 dot={false}
