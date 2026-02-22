@@ -19,8 +19,7 @@ const ShareStrip = () => {
       </div>
       <button
         onClick={() => toast("Report card generated! (demo)")}
-        className="text-sm text-primary font-medium border rounded-lg px-4 py-2 hover:bg-secondary transition-colors"
-        style={{ borderColor: "hsla(252, 75%, 63%, 0.2)" }}
+        className="glass-button text-sm text-primary font-medium rounded-lg px-4 py-2"
       >
         Generate Report Card →
       </button>

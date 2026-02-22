@@ -116,7 +116,7 @@ const InsightCard = ({
                 <div className="relative">
                   <button
                     onClick={() => !blurred && setShowPopover(!showPopover)}
-                    className="brand-gradient text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2 hover:opacity-90 transition-opacity"
+                    className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2"
                   >
                     {ctaLabel}
                   </button>
@@ -134,14 +134,14 @@ const InsightCard = ({
                       <p className="text-xs text-secondary-foreground mb-3">
                         Get personalized swap links and direct DEX recommendations
                       </p>
-                      <button className="brand-gradient text-primary-foreground text-xs font-semibold rounded-lg px-4 py-2 w-full hover:opacity-90 transition-opacity">
+                      <button className="glass-button-primary text-primary-foreground text-xs font-semibold rounded-lg px-4 py-2 w-full">
                         Start 7-Day Free Trial →
                       </button>
                     </div>
                   )}
                 </div>
               )}
-              <button className="text-sm text-secondary-foreground border border-border rounded-lg px-4 py-2 hover:bg-secondary transition-colors flex items-center gap-1">
+              <button className="glass-button text-sm text-secondary-foreground rounded-lg px-4 py-2 flex items-center gap-1">
                 See risk breakdown <ChevronDown className="w-3.5 h-3.5" />
               </button>
               {!blurred && (
@@ -279,7 +279,7 @@ const AIDiagnosis = () => {
           Based on your portfolio, Pro insights could help you save{" "}
           <span className="text-profit font-bold">~$9,839</span> in potential losses
         </p>
-        <button className="brand-gradient text-primary-foreground font-semibold rounded-lg px-8 py-3 text-base w-full max-w-[320px] hover:opacity-90 transition-opacity">
+        <button className="glass-button-primary text-primary-foreground font-semibold rounded-lg px-8 py-3 text-base w-full max-w-[320px]">
           <Sparkles className="w-4 h-4 inline mr-2" />
           Start 7-Day Free Trial
         </button>
