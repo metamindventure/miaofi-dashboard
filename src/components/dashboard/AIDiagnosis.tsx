@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Brain,
   Share2,
@@ -9,6 +9,11 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+interface ActionOption {
+  label: string;
+  description: string;
+}
+
 interface InsightCardProps {
   severity: "critical" | "warning" | "tip";
   impact: string;
@@ -16,6 +21,7 @@ interface InsightCardProps {
   body: string;
   blurred?: boolean;
   ctaLabel?: string;
+  actions?: ActionOption[];
 }
 
 const severityConfig = {
@@ -46,11 +52,24 @@ const InsightCard = ({
   body,
   blurred,
   ctaLabel,
+  actions = [],
 }: InsightCardProps) => {
   const config = severityConfig[severity];
   const [reviewed, setReviewed] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [showPopover, setShowPopover] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   const handleShare = () => {
     navigator.clipboard.writeText(
@@ -112,31 +131,41 @@ const InsightCard = ({
               {body}
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              {ctaLabel && (
-                <div className="relative">
+              {ctaLabel && actions.length > 0 && (
+                <div className="relative" ref={dropdownRef}>
                   <button
-                    onClick={() => !blurred && setShowPopover(!showPopover)}
-                    className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2"
+                    onClick={() => !blurred && setDropdownOpen(!dropdownOpen)}
+                    className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2 flex items-center gap-1.5"
                   >
                     {ctaLabel}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
                   </button>
-                  {showPopover && (
+                  {dropdownOpen && (
                     <div
-                      className="absolute top-full left-0 mt-2 p-4 w-[280px] z-50 bg-[#1a1a2e] border border-white/10 rounded-2xl shadow-xl"
-                      onClick={(e) => e.stopPropagation()}
+                      className="absolute top-full left-0 mt-2 w-[300px] z-50 rounded-xl overflow-hidden"
+                      style={{
+                        background: "hsl(var(--glass-bg))",
+                        border: "1px solid hsl(var(--glass-border))",
+                        backdropFilter: "blur(30px)",
+                        boxShadow: "0 8px 32px -4px hsl(0 0% 0% / 0.5)",
+                      }}
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Lock className="w-4 h-4 text-primary" />
-                        <span className="brand-gradient-text font-semibold text-[13px]">
-                          Pro Feature
-                        </span>
-                      </div>
-                      <p className="text-xs text-secondary-foreground mb-3">
-                        Get personalized swap links and direct DEX recommendations
-                      </p>
-                      <button className="glass-button-primary text-primary-foreground text-xs font-semibold rounded-lg px-4 py-2 w-full">
-                        Start 7-Day Free Trial →
-                      </button>
+                      {actions.map((action, i) => (
+                        <button
+                          key={i}
+                          onClick={() => {
+                            toast(`Selected: ${action.label}`);
+                            setDropdownOpen(false);
+                          }}
+                          className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0"
+                        >
+                          <div className="flex items-center gap-2">
+                            {i === 0 && <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />}
+                            <span className="text-sm font-medium text-foreground">{action.label}</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-0.5 ml-[22px]">{i === 0 ? "" : ""}{action.description}</p>
+                        </button>
+                      ))}
                     </div>
                   )}
                 </div>
@@ -246,7 +275,12 @@ const AIDiagnosis = () => {
         impact="Impact: ~$6,698 at risk"
         title="69% Portfolio in Single Tokenized Stock"
         body={"You hold 54.75 TSLAx worth $22,327 — that\u2019s 61.4% of your portfolio. Combined with GOOGLx ($2,838), tokenized stocks make up 69% of total value. If TSLAx drops 30%, you lose ~$6,698."}
-        ctaLabel="Diversify TSLAx → See Options"
+        ctaLabel="Diversify TSLAx"
+        actions={[
+          { label: "Swap 50% TSLAx → SOL", description: "Reduce concentration while keeping upside exposure" },
+          { label: "Swap 30% TSLAx → USDT", description: "Lock in profits and reduce volatility" },
+          { label: "Split into 3 tokenized stocks", description: "Diversify across AAPL, AMZN, MSFT" },
+        ]}
       />
 
       <InsightCard
@@ -254,7 +288,12 @@ const AIDiagnosis = () => {
         impact="Impact: High volatility exposure"
         title="RCH Positions: High-Risk Micro-Cap Exposure"
         body="Your RCH holdings ($2,526) represent a significant micro-cap allocation with limited liquidity. This token has 90-day volatility of 340%. Consider reducing to <5% of portfolio."
-        ctaLabel="Reduce RCH → See Options"
+        ctaLabel="Reduce RCH"
+        actions={[
+          { label: "Sell 70% RCH → USDT", description: "Drastically lower micro-cap risk" },
+          { label: "Sell 50% RCH → SOL", description: "Rotate into large-cap for stability" },
+          { label: "Set stop-loss at -20%", description: "Auto-sell if price drops further" },
+        ]}
       />
 
       <InsightCard
@@ -263,7 +302,12 @@ const AIDiagnosis = () => {
         title="Your Stablecoins Are Sitting Idle — Earn 8.2% APY"
         body="Your $5.98 in USDT and USDS could be earning yield in Aave or Morpho. Current best rate for USDT on Solana is 8.2% via Kamino Finance, which has $450M TVL and 2 audits."
         blurred
-        ctaLabel="Earn Yield → See Options"
+        ctaLabel="Earn Yield"
+        actions={[
+          { label: "Deposit USDT → Kamino 8.2% APY", description: "Highest yield, audited protocol" },
+          { label: "Deposit USDT → Aave 6.1% APY", description: "Lower yield, battle-tested" },
+          { label: "Deposit USDS → Morpho 7.5% APY", description: "Good balance of risk and return" },
+        ]}
       />
 
       <InsightCard
@@ -273,6 +317,11 @@ const AIDiagnosis = () => {
         body="You hold 0.046 WBTC on Optimism ($3,141) and 0.010 WBTC on Arbitrum ($697). Consolidating to one chain would save gas fees and simplify management."
         blurred
         ctaLabel="Consolidate WBTC"
+        actions={[
+          { label: "Bridge all to Optimism", description: "Lower fees, larger liquidity pool" },
+          { label: "Bridge all to Arbitrum", description: "Faster transactions, growing DeFi" },
+          { label: "Bridge all to Ethereum L1", description: "Maximum security, higher gas" },
+        ]}
       />
 
       {/* Paywall CTA */}
