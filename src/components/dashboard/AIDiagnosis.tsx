@@ -89,7 +89,7 @@ const InsightCard = ({
       style={{
         borderLeft: `3px solid ${config.border}`,
         opacity: reviewed ? 0.5 : 1,
-        zIndex: showPopover ? 50 : 1,
+        zIndex: dropdownOpen ? 50 : 1,
       }}
     >
       {/* Top row */}
