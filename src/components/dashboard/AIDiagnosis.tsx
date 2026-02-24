@@ -142,13 +142,7 @@ const InsightCard = ({
                   </button>
                   {dropdownOpen && (
                     <div
-                      className="absolute top-full left-0 mt-2 w-[300px] z-50 rounded-xl overflow-hidden"
-                      style={{
-                        background: "hsl(var(--glass-bg))",
-                        border: "1px solid hsl(var(--glass-border))",
-                        backdropFilter: "blur(30px)",
-                        boxShadow: "0 8px 32px -4px hsl(0 0% 0% / 0.5)",
-                      }}
+                      className="absolute top-full left-0 mt-2 w-[300px] z-50 rounded-xl overflow-hidden bg-[#1a1a2e] border border-white/10 shadow-xl"
                     >
                       {actions.map((action, i) => (
                         <button
