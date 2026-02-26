@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Activity, TrendingDown, TrendingUp, Shield, Clock, ChevronDown } from "lucide-react";
+import { Activity, TrendingDown, TrendingUp, Shield, Clock, ChevronDown, Share2 } from "lucide-react";
+import ShareCardModal from "./ShareCardModal";
 
 type Period = "30D" | "7D" | "1D";
 
@@ -62,6 +63,7 @@ const TradingBehavior = () => {
   const [period, setPeriod] = useState<Period>("30D");
   const [sectionOpen, setSectionOpen] = useState(false);
   const [patternsOpen, setPatternsOpen] = useState(true);
+  const [shareOpen, setShareOpen] = useState(false);
   const data = periodData[period];
 
   return (
@@ -75,7 +77,16 @@ const TradingBehavior = () => {
           <Activity className="w-[18px] h-[18px] text-primary" />
           <h3 className="font-display font-semibold text-[15px] text-foreground">Trading Behavior</h3>
         </div>
-        <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${sectionOpen ? "rotate-180" : ""}`} />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={(e) => { e.stopPropagation(); setShareOpen(true); }}
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/5 transition-colors"
+            title="Share your trading behavior"
+          >
+            <Share2 className="w-4 h-4" />
+          </button>
+          <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${sectionOpen ? "rotate-180" : ""}`} />
+        </div>
       </button>
 
       {/* Summary — always visible */}
@@ -156,6 +167,22 @@ const TradingBehavior = () => {
           )}
         </div>
       )}
+      <ShareCardModal
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        context="trading-behavior"
+        data={{
+          title: `Trading Behavior · ${period}`,
+          subtitle: data.summary,
+          highlight: `${data.mainEmoji} ${data.mainBehavior}`,
+          highlightColor: "primary",
+          details: [
+            `${data.stats.trades} trades`,
+            `${data.stats.winRate}% win rate`,
+            `Avg hold: ${data.stats.avgHold}`,
+          ],
+        }}
+      />
     </div>
   );
 };
