@@ -3,7 +3,6 @@ import NavBar from "@/components/dashboard/NavBar";
 import LoadingState from "@/components/dashboard/LoadingState";
 import PLHero from "@/components/dashboard/PLHero";
 import AIDiagnosis from "@/components/dashboard/AIDiagnosis";
-import TradingBehavior from "@/components/dashboard/TradingBehavior";
 import ShareStrip from "@/components/dashboard/ShareStrip";
 import PortfolioBento from "@/components/dashboard/PortfolioBento";
 import WalletSummary from "@/components/dashboard/WalletSummary";
@@ -53,7 +52,6 @@ const Index = () => {
           >
             <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8 pt-14">
               <PLHero animate={showDashboard} />
-              <TradingBehavior />
               <AIDiagnosis />
               <ShareStrip />
               <PortfolioBento />
