@@ -106,42 +106,161 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
         {/* Card Preview */}
         <div className="p-6 pb-5">
           <div
-            className="rounded-xl p-5 space-y-3"
+            className="rounded-xl p-5 space-y-3 relative overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, hsl(252 60% 12%), hsl(240 30% 8%))",
               border: "1px solid hsl(var(--glass-border))",
+              background: context === "portfolio-pnl"
+                ? (data.highlightColor === "loss"
+                    ? "linear-gradient(160deg, hsl(350 40% 10%), hsl(240 30% 6%))"
+                    : "linear-gradient(160deg, hsl(160 40% 8%), hsl(240 30% 6%))")
+                : "linear-gradient(160deg, hsl(252 50% 12%), hsl(240 30% 6%))",
             }}
           >
-            {/* Brand */}
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold tracking-wider uppercase text-primary">MiaoFi 🐱</span>
-              <span className="text-[10px] text-muted-foreground">miaofi.app</span>
+            {/* Animated background layer */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
+              {context === "portfolio-pnl" && data.highlightColor !== "loss" && (
+                <>
+                  {/* Rising particles for profit */}
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute rounded-full"
+                      style={{
+                        width: `${3 + Math.random() * 4}px`,
+                        height: `${3 + Math.random() * 4}px`,
+                        left: `${10 + i * 11}%`,
+                        bottom: `-10%`,
+                        background: `hsla(160, 100%, 55%, ${0.15 + Math.random() * 0.2})`,
+                        animation: `shareCardFloat ${3 + i * 0.5}s ease-in-out infinite`,
+                        animationDelay: `${i * 0.4}s`,
+                      }}
+                    />
+                  ))}
+                  {/* Glow orb */}
+                  <div
+                    className="absolute w-32 h-32 rounded-full"
+                    style={{
+                      top: "-20%",
+                      right: "-10%",
+                      background: "radial-gradient(circle, hsla(160, 100%, 50%, 0.12) 0%, transparent 70%)",
+                      animation: "shareCardPulse 4s ease-in-out infinite",
+                    }}
+                  />
+                  {/* Sparkline silhouette */}
+                  <svg className="absolute bottom-0 left-0 w-full h-[40%] opacity-[0.07]" viewBox="0 0 100 40" preserveAspectRatio="none">
+                    <path d="M0 35 L10 30 L20 32 L30 22 L40 25 L50 18 L60 20 L70 12 L80 15 L90 8 L100 5 L100 40 L0 40Z" fill="hsl(160 100% 50%)" />
+                  </svg>
+                </>
+              )}
+
+              {context === "portfolio-pnl" && data.highlightColor === "loss" && (
+                <>
+                  {/* Falling particles for loss */}
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute rounded-full"
+                      style={{
+                        width: `${2 + Math.random() * 3}px`,
+                        height: `${2 + Math.random() * 3}px`,
+                        left: `${15 + i * 13}%`,
+                        top: `-10%`,
+                        background: `hsla(350, 100%, 65%, ${0.12 + Math.random() * 0.15})`,
+                        animation: `shareCardFall ${4 + i * 0.6}s ease-in-out infinite`,
+                        animationDelay: `${i * 0.5}s`,
+                      }}
+                    />
+                  ))}
+                  <div
+                    className="absolute w-28 h-28 rounded-full"
+                    style={{
+                      bottom: "-15%",
+                      left: "-5%",
+                      background: "radial-gradient(circle, hsla(350, 100%, 60%, 0.1) 0%, transparent 70%)",
+                      animation: "shareCardPulse 5s ease-in-out infinite",
+                    }}
+                  />
+                </>
+              )}
+
+              {context === "trading-behavior" && (
+                <>
+                  {/* Orbiting dots for behavior */}
+                  <div
+                    className="absolute w-[200px] h-[200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                    style={{ animation: "shareCardOrbit 20s linear infinite" }}
+                  >
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute rounded-full"
+                        style={{
+                          width: `${4 + i}px`,
+                          height: `${4 + i}px`,
+                          top: "50%",
+                          left: "50%",
+                          transform: `rotate(${i * 72}deg) translateX(${60 + i * 12}px)`,
+                          background: `hsla(252, 80%, 65%, ${0.15 + i * 0.05})`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  {/* Accent glow */}
+                  <div
+                    className="absolute w-36 h-36 rounded-full"
+                    style={{
+                      top: "-25%",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      background: "radial-gradient(circle, hsla(252, 80%, 60%, 0.1) 0%, transparent 70%)",
+                      animation: "shareCardPulse 3.5s ease-in-out infinite",
+                    }}
+                  />
+                  {/* Grid pattern */}
+                  <div
+                    className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                      backgroundImage: "linear-gradient(hsl(252 80% 70%) 1px, transparent 1px), linear-gradient(90deg, hsl(252 80% 70%) 1px, transparent 1px)",
+                      backgroundSize: "24px 24px",
+                    }}
+                  />
+                </>
+              )}
             </div>
 
-            {/* Title */}
-            <p className="text-xs text-muted-foreground">{data.title}</p>
-
-            {/* Highlight */}
-            <h3 className={`font-display font-bold text-2xl ${highlightColorMap[data.highlightColor || "primary"]}`}>
-              {data.highlight}
-            </h3>
-
-            {/* Subtitle */}
-            <p className="text-sm text-secondary-foreground">{data.subtitle}</p>
-
-            {/* Detail chips */}
-            {data.details && data.details.length > 0 && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {data.details.map((d, i) => (
-                  <span key={i} className="glass-chip text-xs">{d}</span>
-                ))}
+            {/* Card content (z-10 above bg) */}
+            <div className="relative z-10 space-y-3">
+              {/* Brand */}
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold tracking-wider uppercase text-primary">MiaoFi 🐱</span>
+                <span className="text-[10px] text-muted-foreground">miaofi.app</span>
               </div>
-            )}
 
-            {/* Footer */}
-            <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-              <span className="text-[10px] text-muted-foreground">Referral: {REFERRAL_CODE}</span>
-              <span className="text-[10px] text-muted-foreground">Analyze your portfolio →</span>
+              {/* Title */}
+              <p className="text-xs text-muted-foreground">{data.title}</p>
+
+              {/* Highlight */}
+              <h3 className={`font-display font-bold text-2xl ${highlightColorMap[data.highlightColor || "primary"]}`}>
+                {data.highlight}
+              </h3>
+
+              {/* Subtitle */}
+              <p className="text-sm text-secondary-foreground">{data.subtitle}</p>
+
+              {/* Detail chips */}
+              {data.details && data.details.length > 0 && (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {data.details.map((d, i) => (
+                    <span key={i} className="glass-chip text-xs">{d}</span>
+                  ))}
+                </div>
+              )}
+
+              {/* Footer */}
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                <span className="text-[10px] text-muted-foreground">Referral: {REFERRAL_CODE}</span>
+                <span className="text-[10px] text-muted-foreground">Analyze your portfolio →</span>
+              </div>
             </div>
           </div>
         </div>
