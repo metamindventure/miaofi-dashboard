@@ -7,7 +7,6 @@ import ShareStrip from "@/components/dashboard/ShareStrip";
 import PortfolioBento from "@/components/dashboard/PortfolioBento";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
-import TradingBehavior from "@/components/dashboard/TradingBehavior";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
 
@@ -56,7 +55,6 @@ const Index = () => {
               <AIDiagnosis />
               <ShareStrip />
               <PortfolioBento />
-              <TradingBehavior />
               <WalletSummary />
               <Holdings />
               <DashboardFooter />
