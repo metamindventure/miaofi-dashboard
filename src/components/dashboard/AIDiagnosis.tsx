@@ -6,6 +6,9 @@ import {
   Check,
   Lock,
   Sparkles,
+  ThumbsUp,
+  ThumbsDown,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -14,7 +17,25 @@ interface ActionOption {
   description: string;
 }
 
+interface InsightFeedback {
+  vote: "up" | "down";
+  reason?: string;
+  timestamp: number;
+}
+
+const saveFeedback = (insightId: string, feedback: InsightFeedback) => {
+  const stored = JSON.parse(localStorage.getItem("miaofi_feedback") || "{}");
+  stored[insightId] = feedback;
+  localStorage.setItem("miaofi_feedback", JSON.stringify(stored));
+};
+
+const getFeedback = (insightId: string): InsightFeedback | null => {
+  const stored = JSON.parse(localStorage.getItem("miaofi_feedback") || "{}");
+  return stored[insightId] || null;
+};
+
 interface InsightCardProps {
+  insightId: string;
   severity: "critical" | "warning" | "tip";
   impact: string;
   title: string;
@@ -24,6 +45,8 @@ interface InsightCardProps {
   actions?: ActionOption[];
   detailAnalysis?: string;
 }
+
+
 
 const severityConfig = {
   critical: {
@@ -47,6 +70,7 @@ const severityConfig = {
 };
 
 const InsightCard = ({
+  insightId,
   severity,
   impact,
   title,
@@ -62,6 +86,9 @@ const InsightCard = ({
   const [showPopover, setShowPopover] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [analysisOpen, setAnalysisOpen] = useState(false);
+  const [feedbackVote, setFeedbackVote] = useState<"up" | "down" | null>(() => getFeedback(insightId)?.vote || null);
+  const [showFeedbackInput, setShowFeedbackInput] = useState(false);
+  const [feedbackReason, setFeedbackReason] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -194,6 +221,62 @@ const InsightCard = ({
           {analysisOpen && detailAnalysis && !blurred && (
             <div className="mt-3 p-4 rounded-lg border border-white/10 bg-[#1a1a2e]">
               <p className="text-sm text-secondary-foreground leading-relaxed whitespace-pre-line">{detailAnalysis}</p>
+              
+              {/* Feedback */}
+              <div className="mt-4 pt-3 border-t border-white/10">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs text-muted-foreground">Was this helpful?</span>
+                  <button
+                    onClick={() => {
+                      setFeedbackVote("up");
+                      setShowFeedbackInput(false);
+                      saveFeedback(insightId, { vote: "up", timestamp: Date.now() });
+                      toast("Thanks for your feedback!");
+                    }}
+                    className={`p-1.5 rounded-md transition-colors ${feedbackVote === "up" ? "bg-profit/20 text-profit" : "text-muted-foreground hover:text-foreground hover:bg-white/5"}`}
+                  >
+                    <ThumbsUp className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFeedbackVote("down");
+                      setShowFeedbackInput(true);
+                      saveFeedback(insightId, { vote: "down", timestamp: Date.now() });
+                    }}
+                    className={`p-1.5 rounded-md transition-colors ${feedbackVote === "down" ? "bg-loss/20 text-loss" : "text-muted-foreground hover:text-foreground hover:bg-white/5"}`}
+                  >
+                    <ThumbsDown className="w-4 h-4" />
+                  </button>
+                </div>
+                
+                {showFeedbackInput && feedbackVote === "down" && (
+                  <div className="mt-3 flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">Tell us why (optional)</span>
+                      <button onClick={() => setShowFeedbackInput(false)} className="text-muted-foreground hover:text-foreground">
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                    <textarea
+                      value={feedbackReason}
+                      onChange={(e) => setFeedbackReason(e.target.value)}
+                      placeholder="What could be improved?"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground resize-none focus:outline-none focus:border-primary/50"
+                      rows={2}
+                    />
+                    <button
+                      onClick={() => {
+                        saveFeedback(insightId, { vote: "down", reason: feedbackReason, timestamp: Date.now() });
+                        setShowFeedbackInput(false);
+                        toast("Thanks for your feedback!");
+                      }}
+                      className="self-end text-xs glass-button px-3 py-1.5 rounded-md text-foreground"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
@@ -280,6 +363,7 @@ const AIDiagnosis = () => {
 
       {/* Insight cards */}
       <InsightCard
+        insightId="tslax-concentration"
         severity="critical"
         impact="Impact: ~$6,698 at risk"
         title="69% Portfolio in Single Tokenized Stock"
@@ -294,6 +378,7 @@ const AIDiagnosis = () => {
       />
 
       <InsightCard
+        insightId="rch-microcap"
         severity="warning"
         impact="Impact: High volatility exposure"
         title="RCH Positions: High-Risk Micro-Cap Exposure"
@@ -308,6 +393,7 @@ const AIDiagnosis = () => {
       />
 
       <InsightCard
+        insightId="idle-stablecoins"
         severity="tip"
         impact="Impact: +8.2% APY available"
         title="Your Stablecoins Are Sitting Idle — Earn 8.2% APY"
@@ -323,6 +409,7 @@ const AIDiagnosis = () => {
       />
 
       <InsightCard
+        insightId="wbtc-fragmented"
         severity="warning"
         impact="Impact: $3,141 fragmented across chains"
         title="WBTC Split Across 2 Chains — Consolidate for Lower Fees"
