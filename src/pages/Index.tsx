@@ -5,6 +5,7 @@ import PLHero from "@/components/dashboard/PLHero";
 import AIDiagnosis from "@/components/dashboard/AIDiagnosis";
 import ShareStrip from "@/components/dashboard/ShareStrip";
 import PortfolioBento from "@/components/dashboard/PortfolioBento";
+import TradingBehavior from "@/components/dashboard/TradingBehavior";
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
@@ -54,7 +55,10 @@ const Index = () => {
               <PLHero animate={showDashboard} />
               <AIDiagnosis />
               <ShareStrip />
-              <PortfolioBento />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <PortfolioBento />
+                <TradingBehavior />
+              </div>
               <WalletSummary />
               <Holdings />
               <DashboardFooter />
