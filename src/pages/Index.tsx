@@ -5,7 +5,6 @@ import PLHero from "@/components/dashboard/PLHero";
 import AIDiagnosis from "@/components/dashboard/AIDiagnosis";
 import ShareStrip from "@/components/dashboard/ShareStrip";
 import PortfolioBento from "@/components/dashboard/PortfolioBento";
-
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";

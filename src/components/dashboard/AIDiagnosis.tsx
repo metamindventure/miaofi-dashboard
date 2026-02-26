@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-
 import {
   Brain,
   Share2,
@@ -344,7 +343,6 @@ const AIDiagnosis = () => {
           </span>
         </div>
       </div>
-
 
       {/* Summary banner */}
       <div
