@@ -22,10 +22,10 @@ const total = 36759;
 
 const PortfolioBento = () => {
   return (
-    <section className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+    <section className="w-full h-full">
+      <div className="grid grid-cols-1 gap-4 h-full">
         {/* Donut chart */}
-        <div className="md:col-span-2 glass-card p-5">
+        <div className="glass-card p-5">
           <h3 className="label-uppercase mb-4">Asset Allocation</h3>
           <div className="flex items-center gap-4">
             <div className="relative w-[140px] h-[140px] shrink-0">
@@ -70,7 +70,7 @@ const PortfolioBento = () => {
         </div>
 
         {/* Chain distribution */}
-        <div className="md:col-span-3 glass-card p-5">
+        <div className="glass-card p-5">
           <h3 className="label-uppercase mb-4">Chain Distribution</h3>
           <div className="flex flex-col gap-3">
             {chainData.map((chain) => (
