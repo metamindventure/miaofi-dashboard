@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
-import { X, Copy, Check, Gift, Crown } from "lucide-react";
+import { X, Copy, Check, Gift, Crown, Download } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
+import { toPng } from "html-to-image";
 import { toast } from "sonner";
 
 type ShareContext = "trading-behavior" | "portfolio-pnl";
@@ -43,7 +45,7 @@ const socialChannels = [
     label: "Instagram",
     bg: "hsla(330, 80%, 55%, 0.12)",
     hoverBg: "hsla(330, 80%, 55%, 0.22)",
-    buildUrl: (_text: string) => null, // Instagram doesn't support direct share URLs
+    buildUrl: (_text: string) => null,
   },
 ];
 
@@ -55,7 +57,29 @@ const highlightColorMap = {
 
 const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) => {
   const [copied, setCopied] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const referralLink = `${SHARE_BASE_URL}${REFERRAL_CODE}`;
+
+  const handleDownloadPng = useCallback(async () => {
+    if (!cardRef.current || downloading) return;
+    setDownloading(true);
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        pixelRatio: 3,
+        backgroundColor: "#0d0d14",
+      });
+      const link = document.createElement("a");
+      link.download = `miaofi-${context}-${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+      toast.success("Card saved as PNG!");
+    } catch {
+      toast.error("Failed to save image");
+    } finally {
+      setDownloading(false);
+    }
+  }, [context, downloading]);
 
   if (!open) return null;
 
@@ -88,7 +112,7 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
 
       {/* Modal */}
       <div
-        className="relative w-full max-w-[420px] rounded-2xl overflow-hidden"
+        className="relative w-full max-w-[420px] rounded-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
         style={{
           background: "hsl(240 20% 7%)",
           border: "1px solid hsl(var(--glass-border))",
@@ -103,8 +127,8 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
           <X className="w-4 h-4" />
         </button>
 
-        {/* Card Preview */}
-        <div className="p-6 pb-5">
+        {/* Capturable Card Area */}
+        <div ref={cardRef} className="p-6 pb-5" style={{ background: "hsl(240 20% 7%)" }}>
           <div
             className="rounded-xl p-5 space-y-3 relative overflow-hidden"
             style={{
@@ -120,7 +144,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
             <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
               {context === "portfolio-pnl" && data.highlightColor !== "loss" && (
                 <>
-                  {/* Rising particles for profit */}
                   {Array.from({ length: 8 }).map((_, i) => (
                     <div
                       key={i}
@@ -136,7 +159,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
                       }}
                     />
                   ))}
-                  {/* Glow orb */}
                   <div
                     className="absolute w-32 h-32 rounded-full"
                     style={{
@@ -146,7 +168,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
                       animation: "shareCardPulse 4s ease-in-out infinite",
                     }}
                   />
-                  {/* Sparkline silhouette */}
                   <svg className="absolute bottom-0 left-0 w-full h-[40%] opacity-[0.07]" viewBox="0 0 100 40" preserveAspectRatio="none">
                     <path d="M0 35 L10 30 L20 32 L30 22 L40 25 L50 18 L60 20 L70 12 L80 15 L90 8 L100 5 L100 40 L0 40Z" fill="hsl(160 100% 50%)" />
                   </svg>
@@ -155,7 +176,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
 
               {context === "portfolio-pnl" && data.highlightColor === "loss" && (
                 <>
-                  {/* Falling particles for loss */}
                   {Array.from({ length: 6 }).map((_, i) => (
                     <div
                       key={i}
@@ -185,7 +205,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
 
               {context === "trading-behavior" && (
                 <>
-                  {/* Orbiting dots for behavior */}
                   <div
                     className="absolute w-[200px] h-[200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     style={{ animation: "shareCardOrbit 20s linear infinite" }}
@@ -205,7 +224,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
                       />
                     ))}
                   </div>
-                  {/* Accent glow */}
                   <div
                     className="absolute w-36 h-36 rounded-full"
                     style={{
@@ -216,7 +234,6 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
                       animation: "shareCardPulse 3.5s ease-in-out infinite",
                     }}
                   />
-                  {/* Grid pattern */}
                   <div
                     className="absolute inset-0 opacity-[0.03]"
                     style={{
@@ -228,26 +245,21 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
               )}
             </div>
 
-            {/* Card content (z-10 above bg) */}
+            {/* Card content */}
             <div className="relative z-10 space-y-3">
-              {/* Brand */}
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold tracking-wider uppercase text-primary">MiaoFi 🐱</span>
                 <span className="text-[10px] text-muted-foreground">miaofi.app</span>
               </div>
 
-              {/* Title */}
               <p className="text-xs text-muted-foreground">{data.title}</p>
 
-              {/* Highlight */}
               <h3 className={`font-display font-bold text-2xl ${highlightColorMap[data.highlightColor || "primary"]}`}>
                 {data.highlight}
               </h3>
 
-              {/* Subtitle */}
               <p className="text-sm text-secondary-foreground">{data.subtitle}</p>
 
-              {/* Detail chips */}
               {data.details && data.details.length > 0 && (
                 <div className="flex flex-wrap gap-2 pt-1">
                   {data.details.map((d, i) => (
@@ -256,17 +268,49 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
                 </div>
               )}
 
-              {/* Footer */}
-              <div className="pt-2 border-t border-white/5 flex items-center justify-between">
-                <span className="text-[10px] text-muted-foreground">Referral: {REFERRAL_CODE}</span>
-                <span className="text-[10px] text-muted-foreground">Analyze your portfolio →</span>
+              {/* QR Code + Referral Link Footer */}
+              <div className="pt-3 border-t border-white/5 flex items-center gap-3">
+                <div className="shrink-0 rounded-lg overflow-hidden p-1.5" style={{ background: "white" }}>
+                  <QRCodeSVG
+                    value={referralLink}
+                    size={56}
+                    bgColor="#ffffff"
+                    fgColor="#0d0d14"
+                    level="M"
+                    imageSettings={{
+                      src: "",
+                      height: 0,
+                      width: 0,
+                      excavate: false,
+                    }}
+                  />
+                </div>
+                <div className="flex-1 min-w-0 space-y-1">
+                  <p className="text-[10px] text-muted-foreground">Scan to analyze your portfolio</p>
+                  <p className="text-xs text-primary font-mono truncate">{referralLink}</p>
+                  <p className="text-[10px] text-muted-foreground">Referral: {REFERRAL_CODE}</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Share Section */}
-        <div className="px-6 pb-3 space-y-4">
+        {/* Actions Section */}
+        <div className="px-6 pb-3 space-y-3">
+          {/* Download PNG */}
+          <button
+            onClick={handleDownloadPng}
+            disabled={downloading}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-foreground transition-all hover:scale-[1.01] disabled:opacity-50"
+            style={{
+              background: "linear-gradient(135deg, hsla(252, 75%, 63%, 0.25), hsla(200, 80%, 55%, 0.15))",
+              border: "1px solid hsla(252, 75%, 63%, 0.3)",
+            }}
+          >
+            <Download className="w-4 h-4" />
+            {downloading ? "Saving…" : "Save as Image"}
+          </button>
+
           {/* Social buttons */}
           <div className="flex gap-2">
             {socialChannels.map((ch) => (
