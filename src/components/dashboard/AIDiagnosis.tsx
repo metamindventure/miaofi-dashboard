@@ -11,7 +11,6 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
-import TradingBehavior from "./TradingBehavior";
 
 interface ActionOption {
   label: string;
@@ -344,9 +343,6 @@ const AIDiagnosis = () => {
           </span>
         </div>
       </div>
-
-      {/* Trading Behavior */}
-      <TradingBehavior />
 
       {/* Summary banner */}
       <div
