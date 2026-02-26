@@ -1,20 +1,45 @@
 
 
-## 给 "High Risk" 摘要横幅添加毛玻璃立体效果
+## Trading Behavior Analysis Module
 
-### 当前状态
+### Placement
+Between **Portfolio Bento Grid** and **Wallet Summary** -- this is the natural spot for behavioral insights after users have seen their portfolio composition but before diving into wallet/holdings details. The layout order becomes: P&L Hero, AI Diagnosis, Share Strip, Portfolio Bento, **Trading Behavior**, Wallets, Holdings, Footer.
 
-截图中的 "High Risk" 横幅目前使用简单的半透明背景 + 左边框，没有毛玻璃效果，看起来比较平。
+### Design
 
-### 修改内容
+**Structure**: A collapsible `glass-card` (same pattern as Holdings component) that defaults to **folded** state. The collapsed header shows:
+- Icon (Activity or TrendingUp) + "Trading Behavior" title
+- A fun emoji-based "trader persona" badge (e.g. "Diamond Hands", "Paper Hands", "Dip Buyer")
+- A one-line AI summary visible even when collapsed (e.g. "You tend to buy high and sell low -- classic FOMO trader")
+- ChevronRight that rotates on expand
 
-**文件：`src/components/dashboard/AIDiagnosis.tsx`（第 219-225 行）**
+**Expanded Content**:
 
-将横幅的样式从内联 style 改为使用 `glass-card` 类，同时保留左侧红色边框作为风险标识：
+1. **Persona Card** -- A highlighted banner with the user's "trader type" emoji + name + witty description (providing emotional value). Examples:
+   - "FOMO Fred" -- "You bought 73% of assets within 24h of their local peak"
+   - "Diamond Hands" -- "Average hold time: 47 days. You don't flinch"
+   - "Profit Sniper" -- "You took profits on 4/6 winning trades before reversals"
 
-- 添加 `glass-card` class 获得毛玻璃背景、模糊、内发光、hover 浮起等全部效果
-- 保留 `borderLeft: 3px solid hsl(var(--loss))` 红色左边框
-- 添加极微弱的红色内发光（`box-shadow: inset`），呼应"高风险"语义
+2. **Behavior Breakdown** -- A list of 4-5 behavioral traits with progress bars and labels:
+   - "Chasing Pumps" (追涨) -- frequency score with bar
+   - "Panic Selling" (杀跌) -- frequency score with bar  
+   - "Taking Profits" (及时止盈) -- score
+   - "Cutting Losses" (及时止损) -- score
+   - "Buy & Hold" (长期持有) -- score
+   
+   Each bar is color-coded: green for good behaviors, orange/red for risky ones.
 
-这样横幅就会和页面上其他卡片保持一致的立体毛玻璃质感，同时通过红色边框保持风险提示的辨识度。
+3. **AI Summary** -- A short paragraph of personalized commentary written in a fun, slightly snarky but supportive tone.
+
+4. **Time Period Tabs** -- "30D / 90D / All Time" toggle to switch analysis periods.
+
+### Technical Details
+
+- New file: `src/components/dashboard/TradingBehavior.tsx`
+- Uses same collapsible pattern as `Holdings.tsx` (useState + maxHeight transition)
+- Mock/hardcoded data (no backend)
+- Add to `Index.tsx` between `PortfolioBento` and `WalletSummary`
+- Uses existing design tokens: `glass-card`, `section-header`, `glass-chip`, severity colors
+- Behavior scores rendered with colored progress bars using inline styles (same approach as chain distribution bars in PortfolioBento)
+- Time period selector uses `glass-chip` styled buttons with active state
 
