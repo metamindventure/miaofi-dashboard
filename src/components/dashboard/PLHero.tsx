@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TrendingUp, TrendingDown, Share2, Wallet } from "lucide-react";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
-import { toast } from "sonner";
+import ShareCardModal from "./ShareCardModal";
 
 const periodData: Record<string, { pnl: number; pct: string; sparkline: { v: number }[] }> = {
   "1D": {
@@ -45,6 +45,7 @@ const PLHero = ({ animate }: PLHeroProps) => {
   const [activePeriod, setActivePeriod] = useState("30D");
   const [displayValue, setDisplayValue] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
 
   const { pnl, pct, sparkline } = periodData[activePeriod];
   const isLoss = pnl < 0;
@@ -70,10 +71,31 @@ const PLHero = ({ animate }: PLHeroProps) => {
   }, [animate, activePeriod]);
 
   const handleShare = () => {
-    navigator.clipboard.writeText(
-      `+$${pnl.toLocaleString()} (${pct}) — ${periodLabels[activePeriod]} P&L across 2 wallets, 6 chains. Analyzed by MiaoFi → miaofi.app`
-    );
-    toast("P&L snapshot copied!");
+    setShareOpen(true);
+  };
+
+  // Emotional copy based on P&L
+  const getEmotionalData = () => {
+    if (isLoss) {
+      return {
+        title: `Portfolio Snapshot · ${periodLabels[activePeriod]}`,
+        subtitle: "Drawdowns are part of the game. Every legend has a red chapter 📖",
+        highlight: `${pct} · -$${Math.abs(pnl).toLocaleString()}`,
+        highlightColor: "loss" as const,
+        details: ["Total: $36,759", "2 Wallets", "6 Chains", "Still standing 💪"],
+      };
+    }
+    const pnlNum = pnl;
+    const emoji = pnlNum > 2000 ? "🚀" : pnlNum > 500 ? "📈" : "✨";
+    return {
+      title: `Portfolio Snapshot · ${periodLabels[activePeriod]}`,
+      subtitle: pnlNum > 2000
+        ? `Outperforming 89% of wallets this period ${emoji}`
+        : `Steady gains, compounding wins ${emoji}`,
+      highlight: `${pct} · +$${pnl.toLocaleString()}`,
+      highlightColor: "profit" as const,
+      details: ["Total: $36,759", "2 Wallets", "6 Chains", pnlNum > 2000 ? "Top 11% 🏆" : "On track 🎯"],
+    };
   };
 
   return (
@@ -162,6 +184,13 @@ const PLHero = ({ animate }: PLHeroProps) => {
           </ResponsiveContainer>
         </div>
       </div>
+
+      <ShareCardModal
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        context="portfolio-pnl"
+        data={getEmotionalData()}
+      />
     </section>
   );
 };
