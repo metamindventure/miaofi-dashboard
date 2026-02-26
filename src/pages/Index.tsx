@@ -52,13 +52,13 @@ const Index = () => {
             style={{ opacity: showDashboard ? 1 : 0 }}
           >
             <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8 pt-14">
-              <PLHero animate={showDashboard} />
-              <AIDiagnosis />
-              <ShareStrip />
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <PortfolioBento />
+                <PLHero animate={showDashboard} />
                 <TradingBehavior />
               </div>
+              <AIDiagnosis />
+              <ShareStrip />
+              <PortfolioBento />
               <WalletSummary />
               <Holdings />
               <DashboardFooter />
