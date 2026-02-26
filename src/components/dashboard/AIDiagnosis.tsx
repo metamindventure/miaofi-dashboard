@@ -22,6 +22,7 @@ interface InsightCardProps {
   blurred?: boolean;
   ctaLabel?: string;
   actions?: ActionOption[];
+  detailAnalysis?: string;
 }
 
 const severityConfig = {
@@ -53,12 +54,14 @@ const InsightCard = ({
   blurred,
   ctaLabel,
   actions = [],
+  detailAnalysis,
 }: InsightCardProps) => {
   const config = severityConfig[severity];
   const [reviewed, setReviewed] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [showPopover, setShowPopover] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [analysisOpen, setAnalysisOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -164,9 +167,14 @@ const InsightCard = ({
                   )}
                 </div>
               )}
-              <button className="glass-button text-sm text-secondary-foreground rounded-lg px-4 py-2 flex items-center gap-1">
-                See risk breakdown <ChevronDown className="w-3.5 h-3.5" />
-              </button>
+              {detailAnalysis && (
+                <button
+                  onClick={() => !blurred && setAnalysisOpen(!analysisOpen)}
+                  className="glass-button text-sm text-secondary-foreground rounded-lg px-4 py-2 flex items-center gap-1"
+                >
+                  See Detail Analysis <ChevronDown className={`w-3.5 h-3.5 transition-transform ${analysisOpen ? "rotate-180" : ""}`} />
+                </button>
+              )}
               {!blurred && (
                 <button
                   onClick={handleReview}
@@ -181,6 +189,13 @@ const InsightCard = ({
               )}
             </div>
           </div>
+
+          {/* Detail Analysis expandable */}
+          {analysisOpen && detailAnalysis && !blurred && (
+            <div className="mt-3 p-4 rounded-lg border border-white/10 bg-[#1a1a2e]">
+              <p className="text-sm text-secondary-foreground leading-relaxed whitespace-pre-line">{detailAnalysis}</p>
+            </div>
+          )}
 
           {/* Blur overlay for paywall cards */}
           {blurred && (
@@ -275,6 +290,7 @@ const AIDiagnosis = () => {
           { label: "Swap 30% TSLAx → USDT", description: "Lock in profits and reduce volatility" },
           { label: "Split into 3 tokenized stocks", description: "Diversify across AAPL, AMZN, MSFT" },
         ]}
+        detailAnalysis="TSLAx represents a single-asset concentration risk that exceeds safe portfolio allocation thresholds. With 61.4% in one tokenized stock, a market correction or Tesla-specific event (earnings miss, regulatory action) could wipe out a significant portion of your portfolio. Historical data shows single-stock portfolios underperform diversified ones by 4-7% annually on a risk-adjusted basis. Swapping 50% into SOL maintains crypto exposure while cutting single-asset risk in half. The USDT option locks in gains during uncertain markets. Splitting across multiple tokenized stocks preserves your equity thesis while spreading company-specific risk."
       />
 
       <InsightCard
@@ -288,6 +304,7 @@ const AIDiagnosis = () => {
           { label: "Sell 50% RCH → SOL", description: "Rotate into large-cap for stability" },
           { label: "Set stop-loss at -20%", description: "Auto-sell if price drops further" },
         ]}
+        detailAnalysis="RCH is a micro-cap token with extremely high volatility (340% over 90 days) and thin liquidity. Micro-caps below $50M market cap carry elevated risks: rug pulls, low trading volume causing slippage, and lack of institutional backing. Your $2,526 position represents ~7% of your portfolio — well above the recommended 2-3% micro-cap allocation. Selling 70% to USDT immediately reduces downside exposure. Rotating into SOL provides large-cap stability with strong ecosystem growth. A stop-loss at -20% is the minimum safeguard if you want to hold, automatically exiting before catastrophic loss."
       />
 
       <InsightCard
@@ -302,6 +319,7 @@ const AIDiagnosis = () => {
           { label: "Deposit USDT → Aave 6.1% APY", description: "Lower yield, battle-tested" },
           { label: "Deposit USDS → Morpho 7.5% APY", description: "Good balance of risk and return" },
         ]}
+        detailAnalysis="Idle stablecoins are a missed opportunity. At 8.2% APY on Kamino Finance, even small amounts compound meaningfully over time. Kamino is a battle-tested protocol on Solana with $450M TVL and 2 completed audits, making it one of the safer yield options. Aave offers lower yield but has the longest track record in DeFi. Morpho provides an intermediate option with optimized lending rates."
       />
 
       <InsightCard
@@ -316,6 +334,7 @@ const AIDiagnosis = () => {
           { label: "Bridge all to Arbitrum", description: "Faster transactions, growing DeFi" },
           { label: "Bridge all to Ethereum L1", description: "Maximum security, higher gas" },
         ]}
+        detailAnalysis="Holding WBTC across multiple L2 chains creates unnecessary complexity and gas costs. Each cross-chain transaction incurs bridge fees ($2-8) and potential slippage. Consolidating to Optimism gives you access to deeper liquidity pools and lower transaction costs. Arbitrum is growing rapidly but currently has slightly higher fees. Ethereum L1 offers maximum security but at 10-50x the gas cost of L2s."
       />
 
       {/* Paywall CTA */}
