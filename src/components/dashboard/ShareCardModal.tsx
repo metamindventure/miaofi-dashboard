@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { X, Copy, Check, Gift, Crown } from "lucide-react";
 import { toast } from "sonner";
 
@@ -80,7 +81,7 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
     }
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" onClick={onClose} />
@@ -216,7 +217,7 @@ const ShareCardModal = ({ open, onClose, context, data }: ShareCardModalProps) =
         </div>
       </div>
     </div>
-  );
+  , document.body);
 };
 
 export default ShareCardModal;
