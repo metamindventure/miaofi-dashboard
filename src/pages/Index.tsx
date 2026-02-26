@@ -5,7 +5,7 @@ import PLHero from "@/components/dashboard/PLHero";
 import AIDiagnosis from "@/components/dashboard/AIDiagnosis";
 import ShareStrip from "@/components/dashboard/ShareStrip";
 import PortfolioBento from "@/components/dashboard/PortfolioBento";
-import TradingBehavior from "@/components/dashboard/TradingBehavior";
+
 import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
@@ -52,10 +52,7 @@ const Index = () => {
             style={{ opacity: showDashboard ? 1 : 0 }}
           >
             <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8 pt-14">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <PLHero animate={showDashboard} />
-                <TradingBehavior />
-              </div>
+              <PLHero animate={showDashboard} />
               <AIDiagnosis />
               <ShareStrip />
               <PortfolioBento />
