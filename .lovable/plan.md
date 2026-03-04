@@ -1,20 +1,39 @@
 
 
-## 给 "High Risk" 摘要横幅添加毛玻璃立体效果
+## Analysis & Plan
 
-### 当前状态
+### Issue 1: Retry Button Visual Confusion
 
-截图中的 "High Risk" 横幅目前使用简单的半透明背景 + 左边框，没有毛玻璃效果，看起来比较平。
+Currently the Retry "button" is just styled text (`<span>`) with reduced opacity when disabled. It still looks interactive. 
 
-### 修改内容
+**Fix**: When `credits === 0`, change Retry to plain dimmed text with a tooltip or label explaining why it's unavailable (e.g., "No credits remaining"). Remove the hover effect entirely and add `opacity-40` to make it obviously inert.
 
-**文件：`src/components/dashboard/AIDiagnosis.tsx`（第 219-225 行）**
+### Issue 2: ConversionNudge Placement — UX Analysis
 
-将横幅的样式从内联 style 改为使用 `glass-card` 类，同时保留左侧红色边框作为风险标识：
+You raise a good point. Let me think through this:
 
-- 添加 `glass-card` class 获得毛玻璃背景、模糊、内发光、hover 浮起等全部效果
-- 保留 `borderLeft: 3px solid hsl(var(--loss))` 红色左边框
-- 添加极微弱的红色内发光（`box-shadow: inset`），呼应"高风险"语义
+**Current placement**: Between PLHero and AIDiagnosis, as a large standalone card.
 
-这样横幅就会和页面上其他卡片保持一致的立体毛玻璃质感，同时通过红色边框保持风险提示的辨识度。
+**Problems with current placement**:
+- It **interrupts the diagnosis flow**. The user just saw their P&L summary and wants to see the AI insights — the nudge blocks that momentum.
+- It's **competing with the diagnosis result** for attention. The spec explicitly says "the sign-in prompt should complement, not compete with" the diagnosis.
+- It feels like a **gate**, not an invitation — exactly what the spec warns against.
+
+**Better approach**: Move the conversion nudge **inside or after the AI Diagnosis section**, as a contextual inline banner. The user has already scrolled through their diagnosis insights and felt the value. At that point, "save this + get more" makes emotional sense. Specifically:
+
+- **Remove** the standalone `ConversionNudge` card from between PLHero and AIDiagnosis.
+- **Add** a compact inline nudge banner at the **bottom of the AIDiagnosis section** (before the pricing cards area), only in `anonymous-post-diagnosis` state. This is where the user has just consumed the diagnosis value and is naturally at a decision point.
+- The nudge becomes a **single-row banner** with the CTA button, not a large multi-card block — lighter, less interruptive.
+
+### Changes
+
+**File: `src/components/dashboard/AIDiagnosis.tsx`**
+- Change Retry from hover-interactive span to a clearly disabled element when `credits === 0` — use `opacity-30`, no cursor change, no hover styles
+- Add an inline conversion nudge banner at the bottom of the diagnosis section (before pricing cards) for `anonymous-post-diagnosis` state, with a compact "Sign in to save & unlock 2 more" CTA
+
+**File: `src/pages/Index.tsx`**
+- Remove `<ConversionNudge />` from the main layout flow
+
+**File: `src/components/dashboard/ConversionNudge.tsx`**
+- Can be kept for reference or deleted; its content moves inline into AIDiagnosis
 
