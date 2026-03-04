@@ -9,6 +9,8 @@ import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
+import ConversionNudge from "@/components/dashboard/ConversionNudge";
+import AuthStateSwitcher from "@/components/dashboard/AuthStateSwitcher";
 
 const Index = () => {
   const [loaded, setLoaded] = useState(false);
@@ -50,8 +52,9 @@ const Index = () => {
             className="transition-opacity duration-500"
             style={{ opacity: showDashboard ? 1 : 0 }}
           >
-            <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-8 pt-14">
+            <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-20 pt-14">
               <PLHero animate={showDashboard} />
+              <ConversionNudge />
               <AIDiagnosis />
               <ShareStrip />
               <PortfolioBento />
@@ -63,6 +66,9 @@ const Index = () => {
         )}
       </div>
       </div>
+
+      {/* Dev-only auth state switcher */}
+      <AuthStateSwitcher />
     </div>
   );
 };
