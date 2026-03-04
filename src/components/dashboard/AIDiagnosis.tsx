@@ -313,7 +313,7 @@ const AIDiagnosis = () => {
           <h2 className="section-header text-foreground">AI Diagnosis</h2>
           <span className="text-xs text-muted-foreground italic">Powered by Claude</span>
           <span className="text-xs text-muted-foreground">⏱ 32.8s</span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1 cursor-pointer hover:text-foreground transition-colors">↻ Retry</span>
+          <span className={`text-xs flex items-center gap-1 transition-colors ${credits > 0 ? "text-muted-foreground cursor-pointer hover:text-foreground" : "text-muted-foreground/40 cursor-not-allowed"}`}>↻ Retry</span>
           <span className="flex items-center gap-1 text-xs font-medium">
             <Zap className={`w-3 h-3 ${credits === 0 ? "text-loss" : "text-primary"}`} />
             <span className={credits === 0 ? "text-loss" : "text-foreground"}>{credits}</span>
