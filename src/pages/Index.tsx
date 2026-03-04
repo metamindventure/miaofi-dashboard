@@ -9,7 +9,7 @@ import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
-import ConversionNudge from "@/components/dashboard/ConversionNudge";
+
 import AuthStateSwitcher from "@/components/dashboard/AuthStateSwitcher";
 
 const Index = () => {
@@ -54,7 +54,7 @@ const Index = () => {
           >
             <main className="max-w-[1120px] mx-auto px-4 md:px-6 space-y-6 pb-20 pt-14">
               <PLHero animate={showDashboard} />
-              <ConversionNudge />
+              
               <AIDiagnosis />
               <ShareStrip />
               <PortfolioBento />

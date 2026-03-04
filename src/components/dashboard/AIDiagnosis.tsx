@@ -302,7 +302,7 @@ const InsightCard = ({
 };
 
 const AIDiagnosis = () => {
-  const { credits, totalCredits } = useAuth();
+  const { credits, totalCredits, authState, signIn } = useAuth();
 
   return (
     <section className="w-full space-y-4">
@@ -313,7 +313,11 @@ const AIDiagnosis = () => {
           <h2 className="section-header text-foreground">AI Diagnosis</h2>
           <span className="text-xs text-muted-foreground italic">Powered by Claude</span>
           <span className="text-xs text-muted-foreground">⏱ 32.8s</span>
-          <span className={`text-xs flex items-center gap-1 transition-colors ${credits > 0 ? "text-muted-foreground cursor-pointer hover:text-foreground" : "text-muted-foreground/40 cursor-not-allowed"}`}>↻ Retry</span>
+          {credits > 0 ? (
+            <span className="text-xs flex items-center gap-1 text-muted-foreground cursor-pointer hover:text-foreground transition-colors">↻ Retry</span>
+          ) : (
+            <span className="text-xs flex items-center gap-1 text-muted-foreground opacity-30 select-none">↻ Retry</span>
+          )}
           <span className="flex items-center gap-1 text-xs font-medium">
             <Zap className={`w-3 h-3 ${credits === 0 ? "text-loss" : "text-primary"}`} />
             <span className={credits === 0 ? "text-loss" : "text-foreground"}>{credits}</span>
@@ -439,6 +443,34 @@ const AIDiagnosis = () => {
         ]}
         detailAnalysis="Holding WBTC across multiple L2 chains creates unnecessary complexity and gas costs. Each cross-chain transaction incurs bridge fees ($2-8) and potential slippage. Consolidating to Optimism gives you access to deeper liquidity pools and lower transaction costs. Arbitrum is growing rapidly but currently has slightly higher fees. Ethereum L1 offers maximum security but at 10-50x the gas cost of L2s."
       />
+
+      {/* Inline conversion nudge for anonymous-post-diagnosis */}
+      {authState === "anonymous-post-diagnosis" && (
+        <div
+          className="glass-card p-4 flex flex-col sm:flex-row items-center justify-between gap-3"
+          style={{
+            border: "1px solid hsla(252, 75%, 63%, 0.2)",
+            boxShadow: "0 0 40px -15px hsla(252, 75%, 63%, 0.12), inset 0 1px 0 0 hsl(0 0% 100% / 0.08)",
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full brand-gradient flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Save this diagnosis & unlock 2 more free</p>
+              <p className="text-xs text-muted-foreground">Sign in to keep your results and analyze more wallets</p>
+            </div>
+          </div>
+          <button
+            onClick={signIn}
+            className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-full px-6 py-2 flex items-center gap-2 shrink-0"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            Sign in free
+          </button>
+        </div>
+      )}
 
       {/* Paywall CTA - Diagnosis Packages */}
       <div
