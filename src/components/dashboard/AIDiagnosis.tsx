@@ -432,7 +432,7 @@ const AIDiagnosis = () => {
         detailAnalysis="Holding WBTC across multiple L2 chains creates unnecessary complexity and gas costs. Each cross-chain transaction incurs bridge fees ($2-8) and potential slippage. Consolidating to Optimism gives you access to deeper liquidity pools and lower transaction costs. Arbitrum is growing rapidly but currently has slightly higher fees. Ethereum L1 offers maximum security but at 10-50x the gas cost of L2s."
       />
 
-      {/* Paywall CTA - Credit Packages */}
+      {/* Paywall CTA - Diagnosis Packages */}
       <div
         className="glass-card p-6 md:p-8"
         style={{ border: "1px solid hsla(252, 75%, 63%, 0.2)" }}
@@ -440,46 +440,38 @@ const AIDiagnosis = () => {
         <div className="flex flex-col items-center text-center mb-6">
           <Lock className="w-7 h-7 text-muted-foreground mb-4" />
           <h3 className="font-display font-semibold text-lg text-foreground mb-2">
-            You've used 13 of 100 free credits
+            Want deeper insights? Get more diagnoses.
           </h3>
           <p className="text-sm text-secondary-foreground max-w-md">
-            Each AI diagnosis costs 1 credit. Upgrade to unlock more insights and save{" "}
+            Each diagnosis scans your entire portfolio with our best AI model. Unlock hidden risks and save{" "}
             <span className="text-profit font-bold">~$9,839</span> in potential losses.
           </p>
-        </div>
-
-        {/* Usage bar */}
-        <div className="w-full max-w-sm mx-auto mb-6">
-          <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-            <div className="h-full rounded-full bg-primary transition-all" style={{ width: "13%" }} />
-          </div>
-          <p className="text-[11px] text-muted-foreground mt-1.5 text-center">87 free credits remaining</p>
         </div>
 
         {/* Packages */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-2xl mx-auto">
           {/* Starter */}
-          <div className="glass-card p-4 rounded-xl text-center border border-white/5 hover:border-white/15 transition-colors">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Experience</p>
-            <p className="text-2xl font-bold text-foreground">50</p>
-            <p className="text-xs text-muted-foreground mb-3">credits</p>
-            <p className="text-lg font-semibold text-foreground mb-1">$4.99</p>
-            <p className="text-[11px] text-muted-foreground mb-3">$0.10 / credit</p>
+          <div className="glass-card p-5 rounded-xl text-center border border-white/5 hover:border-white/15 transition-colors">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Starter</p>
+            <p className="text-3xl font-bold text-foreground">5</p>
+            <p className="text-xs text-muted-foreground mb-3">diagnoses</p>
+            <p className="text-xl font-semibold text-foreground mb-1">$3.99</p>
+            <p className="text-[11px] text-muted-foreground mb-4">$0.80 / diagnosis</p>
             <button className="glass-button text-sm text-foreground rounded-lg px-4 py-2 w-full">
-              Buy Starter
+              Get Started
             </button>
           </div>
 
           {/* Standard - recommended */}
-          <div className="glass-card p-4 rounded-xl text-center relative border border-primary/30 hover:border-primary/50 transition-colors">
+          <div className="glass-card p-5 rounded-xl text-center relative border border-primary/30 hover:border-primary/50 transition-colors">
             <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase px-3 py-0.5 rounded-full bg-primary text-primary-foreground">
-              Most Popular
+              Best Value
             </span>
-            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1 mt-1">Standard</p>
-            <p className="text-2xl font-bold text-foreground">200</p>
-            <p className="text-xs text-muted-foreground mb-3">credits</p>
-            <p className="text-lg font-semibold text-foreground mb-1">$14.99</p>
-            <p className="text-[11px] text-profit mb-3">$0.075 / credit · Save 25%</p>
+            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2 mt-1">Standard</p>
+            <p className="text-3xl font-bold text-foreground">15</p>
+            <p className="text-xs text-muted-foreground mb-3">diagnoses</p>
+            <p className="text-xl font-semibold text-foreground mb-1">$8.99</p>
+            <p className="text-[11px] text-profit mb-4">$0.60 / diagnosis · Save 25%</p>
             <button className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2 w-full">
               <Sparkles className="w-3.5 h-3.5 inline mr-1" />
               Buy Standard
@@ -487,27 +479,27 @@ const AIDiagnosis = () => {
           </div>
 
           {/* Pro */}
-          <div className="glass-card p-4 rounded-xl text-center border border-white/5 hover:border-white/15 transition-colors">
-            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">Professional</p>
-            <p className="text-2xl font-bold text-foreground">500</p>
-            <p className="text-xs text-muted-foreground mb-3">credits</p>
-            <p className="text-lg font-semibold text-foreground mb-1">$29.99</p>
-            <p className="text-[11px] text-profit mb-3">$0.06 / credit · Save 40%</p>
+          <div className="glass-card p-5 rounded-xl text-center border border-white/5 hover:border-white/15 transition-colors">
+            <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Pro</p>
+            <p className="text-3xl font-bold text-foreground">40</p>
+            <p className="text-xs text-muted-foreground mb-3">diagnoses</p>
+            <p className="text-xl font-semibold text-foreground mb-1">$15.99</p>
+            <p className="text-[11px] text-profit mb-4">$0.40 / diagnosis · Save 50%</p>
             <button className="glass-button text-sm text-foreground rounded-lg px-4 py-2 w-full">
               Buy Pro
             </button>
           </div>
         </div>
 
-        <p className="text-[11px] text-muted-foreground mt-4 text-center flex items-center justify-center gap-3 flex-wrap">
+        <p className="text-[11px] text-muted-foreground mt-5 text-center flex items-center justify-center gap-3 flex-wrap">
           <span className="flex items-center gap-1">
-            <Check className="w-3 h-3 text-profit" /> All insights unlocked
+            <Check className="w-3 h-3 text-profit" /> Full AI analysis unlocked
           </span>
           <span className="flex items-center gap-1">
-            <Check className="w-3 h-3 text-profit" /> Personalized swap links
+            <Check className="w-3 h-3 text-profit" /> Personalized action plans
           </span>
           <span className="flex items-center gap-1">
-            <Check className="w-3 h-3 text-profit" /> Credits never expire
+            <Check className="w-3 h-3 text-profit" /> Diagnoses never expire
           </span>
         </p>
       </div>
