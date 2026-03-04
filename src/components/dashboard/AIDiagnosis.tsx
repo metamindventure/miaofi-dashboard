@@ -10,8 +10,10 @@ import {
   ThumbsUp,
   ThumbsDown,
   X,
+  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ActionOption {
   label: string;
@@ -300,6 +302,8 @@ const InsightCard = ({
 };
 
 const AIDiagnosis = () => {
+  const { credits, totalCredits } = useAuth();
+
   return (
     <section className="w-full space-y-4">
       {/* Header */}
@@ -309,9 +313,13 @@ const AIDiagnosis = () => {
           <h2 className="section-header text-foreground">AI Diagnosis</h2>
           <span className="text-xs text-muted-foreground italic">Powered by Claude</span>
           <span className="text-xs text-muted-foreground">⏱ 32.8s</span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1">↻ Retry</span>
-          <span className="text-xs font-medium text-foreground">13/100</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-profit inline-block" />
+          <span className="text-xs text-muted-foreground flex items-center gap-1 cursor-pointer hover:text-foreground transition-colors">↻ Retry</span>
+          <span className="flex items-center gap-1 text-xs font-medium">
+            <Zap className={`w-3 h-3 ${credits === 0 ? "text-loss" : "text-primary"}`} />
+            <span className={credits === 0 ? "text-loss" : "text-foreground"}>{credits}</span>
+            <span className="text-muted-foreground">/ {totalCredits}</span>
+          </span>
+          <span className={`w-1.5 h-1.5 rounded-full ${credits > 0 ? "bg-profit" : "bg-loss"} inline-block`} />
         </div>
         {/* Risk ring */}
         <div
