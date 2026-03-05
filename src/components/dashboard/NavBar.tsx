@@ -16,7 +16,7 @@ const WALLET_FULL = "0x7a3B1c8D2e5F6a9b0C4d3E8f1A2b5c7D9e4F9f4E";
 
 const NavBar = () => {
   const { toast } = useToast();
-  const { authState, credits, totalCredits, signIn, signOut: authSignOut } = useAuth();
+  const { authState, credits, totalCredits, signIn, signOut: authSignOut, setUpgradeModalOpen } = useAuth();
 
   const isSignedIn = authState === "signed-in-free" || authState === "signed-in-paid";
   const showUpgrade = authState === "signed-in-free" && credits === 0;
@@ -87,7 +87,10 @@ const NavBar = () => {
 
             {/* Upgrade CTA — only when credits are 0 or paid user wants more */}
             {(showUpgrade || authState === "signed-in-paid") && (
-              <button className="glass-button-primary text-primary-foreground text-xs font-semibold rounded-full px-5 py-2 flex items-center gap-1.5">
+              <button
+                onClick={() => setUpgradeModalOpen(true)}
+                className="glass-button-primary text-primary-foreground text-xs font-semibold rounded-full px-5 py-2 flex items-center gap-1.5"
+              >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">
                   {credits === 0 ? "Buy Credits" : "Buy More"}

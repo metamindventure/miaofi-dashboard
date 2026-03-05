@@ -302,7 +302,7 @@ const InsightCard = ({
 };
 
 const AIDiagnosis = () => {
-  const { credits, totalCredits, authState, signIn } = useAuth();
+  const { credits, totalCredits, authState, signIn, setUpgradeModalOpen } = useAuth();
 
   return (
     <section className="w-full space-y-4">
@@ -497,7 +497,7 @@ const AIDiagnosis = () => {
             <p className="text-xs text-muted-foreground mb-3">diagnoses</p>
             <p className="text-xl font-semibold text-foreground mb-1">$3.99</p>
             <p className="text-[11px] text-muted-foreground mb-4">$0.80 / diagnosis</p>
-            <button className="glass-button text-sm text-foreground rounded-lg px-4 py-2 w-full">
+            <button onClick={() => setUpgradeModalOpen(true)} className="glass-button text-sm text-foreground rounded-lg px-4 py-2 w-full">
               Get Started
             </button>
           </div>
@@ -512,7 +512,7 @@ const AIDiagnosis = () => {
             <p className="text-xs text-muted-foreground mb-3">diagnoses</p>
             <p className="text-xl font-semibold text-foreground mb-1">$8.99</p>
             <p className="text-[11px] text-profit mb-4">$0.60 / diagnosis · Save 25%</p>
-            <button className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2 w-full">
+            <button onClick={() => setUpgradeModalOpen(true)} className="glass-button-primary text-primary-foreground text-sm font-semibold rounded-lg px-4 py-2 w-full">
               <Sparkles className="w-3.5 h-3.5 inline mr-1" />
               Buy Standard
             </button>
@@ -525,7 +525,7 @@ const AIDiagnosis = () => {
             <p className="text-xs text-muted-foreground mb-3">diagnoses</p>
             <p className="text-xl font-semibold text-foreground mb-1">$15.99</p>
             <p className="text-[11px] text-profit mb-4">$0.40 / diagnosis · Save 50%</p>
-            <button className="glass-button text-sm text-foreground rounded-lg px-4 py-2 w-full">
+            <button onClick={() => setUpgradeModalOpen(true)} className="glass-button text-sm text-foreground rounded-lg px-4 py-2 w-full">
               Buy Pro
             </button>
           </div>
