@@ -9,10 +9,13 @@ import WalletSummary from "@/components/dashboard/WalletSummary";
 import Holdings from "@/components/dashboard/Holdings";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import MatrixStreamBg from "@/components/dashboard/backgrounds/MatrixStreamBg";
+import UpgradeModal from "@/components/dashboard/UpgradeModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 import AuthStateSwitcher from "@/components/dashboard/AuthStateSwitcher";
 
 const Index = () => {
+  const { upgradeModalOpen, setUpgradeModalOpen } = useAuth();
   const [loaded, setLoaded] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
 
@@ -69,6 +72,9 @@ const Index = () => {
 
       {/* Dev-only auth state switcher */}
       <AuthStateSwitcher />
+
+      {/* Upgrade Modal */}
+      <UpgradeModal open={upgradeModalOpen} onClose={() => setUpgradeModalOpen(false)} />
     </div>
   );
 };
