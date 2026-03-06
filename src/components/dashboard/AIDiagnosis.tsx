@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import TradingBehavior from "./TradingBehavior";
+import TradingBehaviorAnalysis from "./tba/TradingBehaviorAnalysis";
 import {
   Brain,
   Share2,
@@ -362,7 +362,7 @@ const AIDiagnosis = () => {
       </div>
 
       {/* Trading Behavior Analysis */}
-      <TradingBehavior />
+      <TradingBehaviorAnalysis />
 
       {/* Summary banner */}
       <div
