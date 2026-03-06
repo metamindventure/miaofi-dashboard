@@ -413,6 +413,7 @@ const AIDiagnosis = () => {
       {expanded && (
         <div className="space-y-4 pt-4">
           {/* Insight cards */}
+          <InsightCard
             insightId="tslax-concentration"
             severity="critical"
             impact="Impact: ~$6,698 at risk"
