@@ -19,6 +19,7 @@ export const mockPatterns: BehaviorPattern[] = [
     actions: [
       { label: "Enable Cool-Down Timer", description: "Block buy orders for 4h after 15%+ surges" },
       { label: "Set Price Alerts Instead", description: "Get notified at your target price, not at the top" },
+      { label: "Review Surge History", description: "See how past surges played out before buying" },
     ],
   },
   {
@@ -38,6 +39,7 @@ export const mockPatterns: BehaviorPattern[] = [
     actions: [
       { label: "Auto Stop-Loss at -15%", description: "Sell automatically at a planned level, not in panic" },
       { label: "Enable Diamond Hands Mode", description: "Require 24h wait before panic sells" },
+      { label: "Set Dip Buy Alerts", description: "Get notified when dips hit recovery zones" },
     ],
   },
   {
@@ -56,6 +58,7 @@ export const mockPatterns: BehaviorPattern[] = [
     actions: [
       { label: "Set Weekly Trade Limit", description: "Cap at 2 trades per week to reduce noise" },
       { label: "Review Trading Journal", description: "Track win rate per trade to see diminishing returns" },
+      { label: "Enable Trade Cooldown", description: "Add a 6h buffer between consecutive trades" },
     ],
   },
   {
@@ -74,6 +77,7 @@ export const mockPatterns: BehaviorPattern[] = [
     actions: [
       { label: "Rebalance Portfolio", description: "Auto-distribute across 4+ asset categories" },
       { label: "Swap 30% to SOL/ETH", description: "Move into large-cap L1 tokens" },
+      { label: "Set Allocation Alerts", description: "Get warned when any category exceeds 40%" },
     ],
   },
   {
@@ -91,6 +95,7 @@ export const mockPatterns: BehaviorPattern[] = [
     actions: [
       { label: "Enable Trailing Stop", description: "Lock in profits while letting winners run" },
       { label: "Set Partial Exit Rules", description: "Sell 50% at target, hold 50% with trailing stop" },
+      { label: "Backtest Exit Strategy", description: "See how different exits would have performed" },
     ],
   },
 ];

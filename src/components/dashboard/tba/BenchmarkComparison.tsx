@@ -127,6 +127,11 @@ const BenchmarkComparison = ({ data }: { data: BenchmarkData }) => {
             <span className="text-[11px] text-muted-foreground">BTC Hold</span>
           </div>
         </div>
+
+        {/* Fine print disclaimer */}
+        <p className="text-[10px] text-muted-foreground/60 mt-3 leading-relaxed">
+          * "Your Return" is calculated from on-chain wallet activity including deposits and withdrawals. It may not reflect your actual realized P&L if you moved funds between wallets.
+        </p>
       </div>
     </div>
   );
