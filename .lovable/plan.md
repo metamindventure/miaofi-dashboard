@@ -1,42 +1,20 @@
 
 
-## Plan: Convert AI Diagnosis into Collapsible "Portfolio Analysis" Card
+## 给 "High Risk" 摘要横幅添加毛玻璃立体效果
 
-### UX Assessment
+### 当前状态
 
-The user's instinct is correct. Currently the dashboard shows TBA (collapsible) followed by a High Risk banner + 4 diagnosis cards all expanded — it's visually overwhelming. Making Portfolio Analysis collapsible mirrors the TBA pattern, creating a consistent "summary → drill down" interaction model. Users scan two compact summary cards, then expand whichever interests them.
+截图中的 "High Risk" 横幅目前使用简单的半透明背景 + 左边框，没有毛玻璃效果，看起来比较平。
 
-### What Changes
+### 修改内容
 
-**1. Restructure `AIDiagnosis.tsx` into a collapsible "Portfolio Analysis" card**
+**文件：`src/components/dashboard/AIDiagnosis.tsx`（第 219-225 行）**
 
-Follow the exact same pattern as `TradingBehaviorAnalysis.tsx`:
+将横幅的样式从内联 style 改为使用 `glass-card` 类，同时保留左侧红色边框作为风险标识：
 
-- **Collapsed state (default)** — A single `glass-card` button showing:
-  - Header row: Brain icon + "Portfolio Analysis" title + risk score badge (e.g., "High Risk · 7/10") with red styling + ChevronDown
-  - Summary line: "71.8% concentrated in Solana tokenized stocks with idle stablecoins" (the current High Risk banner text)
-  - Key stats row: "Issues Found: 4", "Critical: 1", "At Risk: ~$6,698" (similar to TBA's Trades/Win Rate/Avg Hold)
-  - Collapsed footer: "Insights detected (4)" + severity dots + chevron hint
+- 添加 `glass-card` class 获得毛玻璃背景、模糊、内发光、hover 浮起等全部效果
+- 保留 `borderLeft: 3px solid hsl(var(--loss))` 红色左边框
+- 添加极微弱的红色内发光（`box-shadow: inset`），呼应"高风险"语义
 
-- **Expanded state** — Shows the existing InsightCards, conversion nudge, and paywall CTA below the header card
-
-**2. Remove the standalone "High Risk" banner** — Its content is absorbed into the collapsed summary.
-
-**3. Remove the separate header row** (Brain icon, "AI Diagnosis", credits counter, risk ring) — Merge the title and credits display into the collapsible card header. The risk ring moves into the header row as a compact badge.
-
-**4. Keep everything else unchanged** — InsightCard component, paywall section, conversion nudge, TradingBehaviorAnalysis import all stay as-is.
-
-### Technical Details
-
-- Rename section header from "AI Diagnosis" to "Portfolio Analysis"
-- Add `expanded` state (default `false`)
-- Collapsed card structure mirrors TBA: single `<button>` with `glass-card p-5`, onClick toggles expanded
-- The credits counter (Zap icon + credits/total), retry button, "Powered by Claude", and response time move into the header row of the collapsible card
-- Risk score displayed as a badge (like TBA's "total behavior cost" badge) instead of a standalone ring — e.g., red-bordered pill showing "High Risk · 7/10"
-- When expanded, all existing content renders below in a `<div className="space-y-4 pt-4">` — identical to TBA's expanded pattern
-- TradingBehaviorAnalysis remains rendered BEFORE the Portfolio Analysis card (current order preserved)
-
-### File Changes
-
-- **`src/components/dashboard/AIDiagnosis.tsx`** — Major restructure of the outer wrapper; InsightCard component untouched
+这样横幅就会和页面上其他卡片保持一致的立体毛玻璃质感，同时通过红色边框保持风险提示的辨识度。
 
