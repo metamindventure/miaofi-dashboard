@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ChevronDown, AlertTriangle, TrendingDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ChevronDown, ChevronUp, AlertTriangle, TrendingDown, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { BehaviorPattern, Severity } from "./types";
 import SeverityBadge from "./SeverityBadge";
@@ -12,10 +12,22 @@ const borderColor: Record<Severity, string> = {
 
 const PatternCard = ({ pattern, index }: { pattern: BehaviorPattern; index: number }) => {
   const [evidenceOpen, setEvidenceOpen] = useState(false);
+  const [actionsOpen, setActionsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setActionsOpen(false);
+      }
+    };
+    if (actionsOpen) document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [actionsOpen]);
 
   return (
     <div
-      className={`glass-card border-l-[3px] ${borderColor[pattern.severity]} p-0 overflow-hidden`}
+      className={`glass-card border-l-[3px] ${borderColor[pattern.severity]} p-0 overflow-hidden ${actionsOpen ? "z-50 relative" : ""}`}
       style={{ animationDelay: `${index * 80}ms` }}
     >
       {/* Header */}
@@ -29,7 +41,6 @@ const PatternCard = ({ pattern, index }: { pattern: BehaviorPattern; index: numb
             <span className="text-[11px] font-mono text-muted-foreground tabular-nums">
               {pattern.confidence}%
             </span>
-            {/* Confidence bar */}
             <div className="w-14 h-1 rounded-full bg-secondary overflow-hidden">
               <div
                 className={`h-full rounded-full ${
@@ -67,22 +78,36 @@ const PatternCard = ({ pattern, index }: { pattern: BehaviorPattern; index: numb
         </div>
       </div>
 
-      {/* Action buttons */}
-      <div className="px-5 pb-3 flex flex-wrap gap-2">
-        {pattern.actions.map((action, i) => (
-          <button
-            key={i}
-            onClick={() => toast(`Action: ${action.label}`)}
-            className={`text-xs font-medium rounded-lg px-3.5 py-2 transition-all ${
-              i === 0
-                ? "glass-button-primary text-primary-foreground"
-                : "glass-button text-secondary-foreground"
-            }`}
-            title={action.description}
-          >
-            {action.label}
-          </button>
-        ))}
+      {/* Action dropdown button */}
+      <div className="px-5 pb-3 relative" ref={dropdownRef}>
+        <button
+          onClick={() => setActionsOpen(!actionsOpen)}
+          className="glass-button-primary text-primary-foreground text-xs font-semibold rounded-lg px-3.5 py-2 flex items-center gap-1.5 transition-all"
+        >
+          {pattern.actions[0]?.label}
+          {actionsOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+        </button>
+
+        {actionsOpen && (
+          <div className="absolute left-5 top-full mt-1 w-[320px] rounded-xl border border-border bg-[#1a1a2e] shadow-xl shadow-black/40 z-50 overflow-hidden">
+            {pattern.actions.map((action, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  toast(`Action: ${action.label}`);
+                  setActionsOpen(false);
+                }}
+                className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors border-b border-border last:border-b-0"
+              >
+                <div className="flex items-center gap-2">
+                  {i === 0 && <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />}
+                  <span className="text-sm font-medium text-foreground">{action.label}</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-0.5 ml-[22px]">{action.description}</p>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Evidence toggle */}
