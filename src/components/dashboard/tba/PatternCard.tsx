@@ -71,6 +71,7 @@ const PatternCard = ({ pattern, index }: { pattern: BehaviorPattern; index: numb
         </div>
         <div className="flex items-center gap-3 shrink-0">
           <div className="flex items-center gap-2">
+            <span className="text-[11px] text-muted-foreground mr-0.5">Confidence</span>
             <span className="text-[11px] font-mono text-muted-foreground tabular-nums">
               {pattern.confidence}%
             </span>
