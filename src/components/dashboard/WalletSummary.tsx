@@ -7,21 +7,31 @@ const wallets = [
 
 const WalletSummary = () => {
   return (
-    <div className="glass-card p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-      <div className="flex items-center gap-2 shrink-0">
-        <Wallet className="w-4 h-4 text-muted-foreground" />
-        <span className="font-display font-semibold text-foreground">$36,759.28</span>
+    <div className="glass-card p-5">
+      {/* Top row: Total value + wallet count */}
+      <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-2">
+          <Wallet className="w-4 h-4 text-muted-foreground" />
+          <span className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+            Total Portfolio Value
+          </span>
+        </div>
+        <span className="font-display font-bold text-lg text-foreground">$36,759.28</span>
+        <span className="text-xs text-muted-foreground">
+          Across {wallets.length} wallet{wallets.length !== 1 ? "s" : ""}
+        </span>
       </div>
-      <span className="text-sm text-muted-foreground shrink-0">Across 2 wallets</span>
-      <div className="flex flex-col sm:flex-row gap-3 flex-1 w-full">
+
+      {/* Wallet grid — adapts to any count */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {wallets.map((w) => (
           <div
             key={w.address}
-            className="flex items-center gap-2 flex-1 justify-between sm:justify-start"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 bg-secondary/30"
           >
-            <span className="font-mono text-sm text-foreground">{w.address}</span>
+            <span className="font-mono text-sm text-foreground truncate">{w.address}</span>
             <span
-              className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full"
+              className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full shrink-0"
               style={{
                 background: `hsl(${w.color} / 0.15)`,
                 color: `hsl(${w.color})`,
@@ -29,7 +39,7 @@ const WalletSummary = () => {
             >
               {w.chain}
             </span>
-            <span className="text-sm text-secondary-foreground ml-auto sm:ml-2">
+            <span className="text-sm text-secondary-foreground ml-auto shrink-0">
               → {w.value}
             </span>
           </div>
