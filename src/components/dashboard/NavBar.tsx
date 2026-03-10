@@ -52,15 +52,47 @@ const NavBar = () => {
           <ChevronDown className="w-3 h-3" />
         </button>
 
-        {/* === Anonymous states: Sign In button === */}
+        {/* === Anonymous states: Credits + Get More + Sign In === */}
         {!isSignedIn && (
-          <button
-            onClick={signIn}
-            className="glass-button text-foreground text-xs font-semibold rounded-full px-5 py-2 flex items-center gap-1.5 hover:border-primary/30"
-          >
-            <User className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Sign In</span>
-          </button>
+          <div className="flex items-center gap-2.5">
+            {/* Credits chip */}
+            <div
+              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium"
+              style={{
+                background: credits === 0
+                  ? "hsla(350, 100%, 65%, 0.12)"
+                  : "hsl(0 0% 100% / 0.04)",
+                border: credits === 0
+                  ? "1px solid hsla(350, 100%, 65%, 0.25)"
+                  : "1px solid hsl(0 0% 100% / 0.10)",
+              }}
+            >
+              <Zap className={`w-3 h-3 ${credits === 0 ? "text-loss" : "text-primary"}`} />
+              <span className={credits === 0 ? "text-loss" : "text-foreground"}>
+                {credits}
+              </span>
+              <span className="text-muted-foreground">/ {totalCredits}</span>
+            </div>
+
+            {/* Get More Diagnoses */}
+            <button
+              onClick={() => setUpgradeModalOpen(true)}
+              className="glass-button-primary text-primary-foreground text-xs font-semibold rounded-full px-4 py-2 flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">获取更多诊断</span>
+              <span className="sm:hidden">更多</span>
+            </button>
+
+            {/* Sign In */}
+            <button
+              onClick={signIn}
+              className="glass-button text-foreground text-xs font-semibold rounded-full px-5 py-2 flex items-center gap-1.5 hover:border-primary/30"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Sign In</span>
+            </button>
+          </div>
         )}
 
         {/* === Signed in: Credit display === */}
