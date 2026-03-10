@@ -3,6 +3,9 @@ import { Wallet } from "lucide-react";
 const wallets = [
   { address: "EQvBW5...3qfT", chain: "SOLANA", value: "$26,381.40", color: "var(--chain-solana)" },
   { address: "0xC5ce...2761", chain: "EVM", value: "$10,377.88", color: "var(--chain-ethereum)" },
+  { address: "0x7a3F...e9B2", chain: "OPTIMISM", value: "$3,141.00", color: "var(--chain-optimism)" },
+  { address: "0xdE42...a1C7", chain: "ARBITRUM", value: "$697.00", color: "var(--chain-arbitrum)" },
+  { address: "bnb1q...x8f4", chain: "BSC", value: "$48.00", color: "var(--chain-bsc)" },
 ];
 
 const WalletSummary = () => {
