@@ -60,8 +60,8 @@ const Index = () => {
               
               <AIDiagnosis />
               <ShareStrip />
-              <PortfolioBento />
               <WalletSummary />
+              <PortfolioBento />
               <Holdings />
               <DashboardFooter />
             </main>
