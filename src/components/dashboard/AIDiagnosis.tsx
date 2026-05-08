@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import TradingBehaviorAnalysis from "./tba/TradingBehaviorAnalysis";
+import DiagnosisStatusBar from "./DiagnosisStatusBar";
 import {
   Brain,
   Share2,
