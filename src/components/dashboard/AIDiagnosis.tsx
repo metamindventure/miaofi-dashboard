@@ -320,6 +320,11 @@ const AIDiagnosis = () => {
 
   return (
     <section className="w-full space-y-0">
+      {/* Unified diagnosis status bar — single source of truth for refresh */}
+      <div className="mb-3">
+        <DiagnosisStatusBar />
+      </div>
+
       {/* Trading Behavior Analysis */}
       <div className="mb-6">
         <TradingBehaviorAnalysis />
@@ -336,13 +341,6 @@ const AIDiagnosis = () => {
             <Brain className="w-5 h-5 text-primary" />
             <h2 className="section-header text-foreground">Portfolio Analysis</h2>
             <span className="text-xs text-muted-foreground italic">Powered by Claude</span>
-            <span className="text-xs text-muted-foreground">⏱ 32.8s</span>
-            {credits > 0 ? (
-              <span className="text-xs flex items-center gap-1 text-muted-foreground cursor-pointer hover:text-foreground transition-colors">↻ Retry</span>
-            ) : (
-              <span className="text-xs flex items-center gap-1 text-muted-foreground opacity-30 select-none">↻ Retry</span>
-            )}
-            <span className={`w-1.5 h-1.5 rounded-full ${credits > 0 ? "bg-profit" : "bg-loss"} inline-block`} />
           </div>
           <div className="flex items-center gap-3">
             {/* Risk badge */}
@@ -351,12 +349,6 @@ const AIDiagnosis = () => {
                 High Risk · 7/10
               </span>
             </div>
-            {/* Credits */}
-            <span className="flex items-center gap-1 text-xs font-medium">
-              <Zap className={`w-3 h-3 ${credits === 0 ? "text-loss" : "text-primary"}`} />
-              <span className={credits === 0 ? "text-loss" : "text-foreground"}>{credits}</span>
-              <span className="text-muted-foreground">/ {totalCredits}</span>
-            </span>
             <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${expanded ? "rotate-180" : ""}`} />
           </div>
         </div>
