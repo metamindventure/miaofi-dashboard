@@ -11,7 +11,6 @@ import {
   ThumbsUp,
   ThumbsDown,
   X,
-  Zap,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
